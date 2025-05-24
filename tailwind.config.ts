@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -18,7 +19,16 @@ export default {
 			}
 		},
 		extend: {
+      fontFamily: {
+        inter: ['Inter', 'sans-serif'],
+      },
 			colors: {
+        'lira-blue': {
+          DEFAULT: 'hsl(200, 100%, 50%)', // Similar to sky-500
+          foreground: 'hsl(0, 0%, 100%)',
+        },
+        'lira-dark-card': 'hsl(220, 13%, 10%)', // Darker than primary background
+        'lira-dark-page': 'hsl(220, 13%, 6%)', // Very dark background
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
