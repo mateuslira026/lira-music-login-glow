@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -15,13 +14,21 @@ const LoginPage = () => {
     e.preventDefault();
     console.log('Attempting login with:', { email, password });
     // Futuramente, aqui irá a lógica de autenticação real
-    alert('Login (simulado) bem-sucedido!');
+    alert('Login (simulado) bem-sucedido! Redirecionando para a página inicial...');
+    // Redirecionar para /home após o login
+    setTimeout(() => {
+      navigate('/home');
+    }, 1500);
   };
 
   const handleGoogleLogin = () => {
     console.log('Attempting Google login...');
     // Futuramente, aqui irá a lógica de login com Google
-    alert('Login com Google (simulado)!');
+    alert('Login com Google (simulado)! Redirecionando para a página inicial...');
+    // Redirecionar para /home após o login com Google
+    setTimeout(() => {
+      navigate('/home');
+    }, 1500);
   };
 
   return (
