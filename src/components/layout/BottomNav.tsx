@@ -1,14 +1,14 @@
 
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Music, Search, Library, User } from 'lucide-react'; // Using 'Home' icon as 'Music' for main screen
+import { Music, Search, Library, User } from 'lucide-react'; 
 import { cn } from '@/lib/utils';
 
 const navItems = [
   { path: '/home', label: 'Início', icon: Music },
-  { path: '/search', label: 'Buscar', icon: Search }, // Placeholder path
-  { path: '/library', label: 'Biblioteca', icon: Library }, // Placeholder path
-  { path: '/profile', label: 'Perfil', icon: User }, // Placeholder path
+  { path: '/search', label: 'Buscar', icon: Search },
+  { path: '/library', label: 'Biblioteca', icon: Library },
+  { path: '/profile', label: 'Perfil', icon: User },
 ];
 
 const BottomNav = () => {
@@ -25,11 +25,11 @@ const BottomNav = () => {
               key={item.label}
               onClick={() => navigate(item.path)}
               className={cn(
-                "flex flex-col items-center justify-center p-2 rounded-md transition-colors duration-200",
+                "flex flex-col items-center justify-center w-full py-2 touch-manipulation",
                 isActive ? "text-lira-blue" : "text-gray-400 hover:text-white"
               )}
             >
-              <item.icon className="h-6 w-6 mb-1" strokeWidth={isActive ? 2.5 : 2} />
+              <item.icon className="h-5 w-5 mb-1" strokeWidth={isActive ? 2.5 : 2} />
               <span className={cn("text-xs font-medium", isActive ? "font-semibold" : "")}>{item.label}</span>
             </button>
           );

@@ -22,19 +22,20 @@ const AlbumCarousel: React.FC<AlbumCarouselProps> = ({ albums }) => {
     <Carousel
       opts={{
         align: "start",
-        loop: false, // Loop can be true if desired
+        loop: true,
+        dragFree: true,
       }}
       className="w-full"
     >
-      <CarouselContent className="-ml-4">
+      <CarouselContent className="-ml-2 md:-ml-4">
         {albums.map((album) => (
-          <CarouselItem key={album.id} className="pl-4 basis-auto">
+          <CarouselItem key={album.id} className="pl-2 md:pl-4 basis-[140px] md:basis-[180px]">
             <AlbumCard album={album} />
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="ml-2 bg-lira-dark-card/80 hover:bg-lira-dark-card border-lira-blue text-lira-blue hover:text-white disabled:bg-lira-dark-card/50" />
-      <CarouselNext className="mr-2 bg-lira-dark-card/80 hover:bg-lira-dark-card border-lira-blue text-lira-blue hover:text-white disabled:bg-lira-dark-card/50" />
+      <CarouselPrevious className="ml-1 h-7 w-7 bg-lira-dark-card/80 hover:bg-lira-dark-card border-lira-blue text-lira-blue hover:text-white disabled:bg-lira-dark-card/50" />
+      <CarouselNext className="mr-1 h-7 w-7 bg-lira-dark-card/80 hover:bg-lira-dark-card border-lira-blue text-lira-blue hover:text-white disabled:bg-lira-dark-card/50" />
     </Carousel>
   );
 };
