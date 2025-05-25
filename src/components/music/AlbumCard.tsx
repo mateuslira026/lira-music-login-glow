@@ -16,9 +16,13 @@ interface AlbumCardProps {
 
 const AlbumCard: React.FC<AlbumCardProps> = ({ album }) => {
   return (
-    <Card className="w-[140px] bg-lira-dark-card border-transparent rounded-lg overflow-hidden shadow-lg hover:shadow-lira-blue/30 transition-shadow duration-300 group cursor-pointer">
+    <Card className="w-full bg-lira-dark-card border-transparent rounded-lg overflow-hidden shadow-lg hover:shadow-lira-blue/30 transition-shadow duration-300 group cursor-pointer">
       <CardContent className="p-0 relative">
-        <img src={album.coverUrl} alt={album.title} className="w-full h-[140px] object-cover transition-transform duration-300 group-hover:scale-105" />
+        <img 
+          src={album.coverUrl} 
+          alt={album.title} 
+          className="w-full aspect-square object-cover transition-transform duration-300 group-hover:scale-105" 
+        />
         <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <Play className="h-10 w-10 text-white fill-white" />
         </div>
