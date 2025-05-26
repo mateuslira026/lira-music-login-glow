@@ -5,70 +5,74 @@ import { usePlayer } from '@/contexts/PlayerContext';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, Play, Pause, SkipBack, SkipForward, MoreHorizontal } from 'lucide-react';
 import { Slider } from "@/components/ui/slider";
-import { FastAverageColor } from 'fast-average-color';
+import { FastAverageColor, FastAverageColorResult } from 'fast-average-color';
 
 const PlayerPage = () => {
   const { currentSong, isPlaying, togglePlay, playNext, playPrevious } = usePlayer();
   const navigate = useNavigate();
-  const [bgColor, setBgColor] = useState<string | null>('rgb(88, 28, 135)'); // Fallback roxo escuro
+  const [bgColor, setBgColor] = useState<string>('rgb(88, 28, 135)'); // Fallback roxo escuro
 
   useEffect(() => {
     if (currentSong?.albumArtUrl) {
       const fac = new FastAverageColor();
-      // Adicionando um timestamp para evitar problemas de cache com CORS se a URL for a mesma mas a imagem mudou
-      const imageUrl = currentSong.albumArtUrl.includes('?') 
-        ? `${currentSong.albumArtUrl}&v=${Date.now()}`
-        : `${currentSong.albumArtUrl}?v=${Date.now()}`;
+      // Adicionar um timestamp para URLs do picsum para tentar evitar cache/CORS issues
+      // Para outras URLs, usar diretamente.
+      let imageUrl = currentSong.albumArtUrl;
+      if (imageUrl.includes('picsum.photos')) {
+        imageUrl = `${imageUrl}?${new Date().getTime()}`;
+      }
 
-      // Para contornar o CORS com picsum.photos, precisaria de um proxy ou uma API que não tenha essa restrição.
-      // No entanto, para o picsum, podemos tentar buscar a imagem como blob.
-      // Se a imagem estiver no mesmo domínio ou tiver cabeçalhos CORS corretos, `getColorAsync` funciona diretamente.
-      
-      // Tentativa de usar fetch para imagens com CORS restrito (como picsum.photos)
-      fetch(imageUrl, { mode: 'cors' })
-        .then(response => {
+      const updateBackgroundColor = (colorResult: FastAverageColorResult | null) => {
+        if (colorResult && colorResult.hex) {
+          const r = parseInt(colorResult.hex.slice(1, 3), 16);
+          const g = parseInt(colorResult.hex.slice(3, 5), 16);
+          const b = parseInt(colorResult.hex.slice(5, 7), 16);
+          // Escurecer um pouco a cor para melhor contraste
+          const darkR = Math.floor(r * 0.7);
+          const darkG = Math.floor(g * 0.7);
+          const darkB = Math.floor(b * 0.7);
+          setBgColor(`rgb(${darkR}, ${darkG}, ${darkB})`);
+        } else {
+          setBgColor('rgb(50, 50, 70)'); // Fallback se a cor não puder ser processada
+        }
+      };
+
+      const attemptDirectColorExtraction = async () => {
+        try {
+          const color = await fac.getColorAsync(imageUrl);
+          updateBackgroundColor(color);
+        } catch (directError) {
+          console.warn(`Direct getColorAsync failed for ${imageUrl}: ${directError}. Attempting fetch workaround for CORS.`);
+          await attemptFetchWorkaround();
+        }
+      };
+
+      const attemptFetchWorkaround = async () => {
+        try {
+          const response = await fetch(imageUrl, { mode: 'cors' });
           if (!response.ok) {
-            // Se falhar com CORS, tenta diretamente (pode funcionar para algumas URLs)
-            console.warn(`Fetch failed for ${imageUrl}, trying direct getColorAsync`);
-            return fac.getColorAsync(currentSong.albumArtUrl);
+            throw new Error(`Fetch failed for album art: ${response.status} ${response.statusText}`);
           }
-          return response.blob();
-        })
-        .then(dataOrColor => {
-            if (typeof dataOrColor === 'string' || (dataOrColor && typeof dataOrColor.hex === 'string')) { // Direct color result
-                 // @ts-ignore
-                setBgColor(dataOrColor.hex || dataOrColor); // Handle both string and object return
-            } else if (dataOrColor instanceof Blob) { // Blob result
-                const objectURL = URL.createObjectURL(dataOrColor);
-                return fac.getColorAsync(objectURL).then(color => {
-                    URL.revokeObjectURL(objectURL); // Clean up
-                    return color;
-                });
-            }
-            return null;
-        })
-        .then(color => {
-          if (color && color.hex) {
-            // Para escurecer a cor um pouco e garantir contraste com texto branco:
-            // Esta é uma forma simples, idealmente usaria uma lib de manipulação de cores
-            const r = parseInt(color.hex.slice(1, 3), 16);
-            const g = parseInt(color.hex.slice(3, 5), 16);
-            const b = parseInt(color.hex.slice(5, 7), 16);
-            // Escurecer um pouco, ex: 70% da cor original
-            const darkR = Math.floor(r * 0.7);
-            const darkG = Math.floor(g * 0.7);
-            const darkB = Math.floor(b * 0.7);
-            setBgColor(`rgb(${darkR}, ${darkG}, ${darkB})`);
+          const blob = await response.blob();
+          const objectURL = URL.createObjectURL(blob);
+          try {
+            const color = await fac.getColorAsync(objectURL);
+            updateBackgroundColor(color);
+          } finally {
+            URL.revokeObjectURL(objectURL); // Limpar o object URL
           }
-        })
-        .catch(e => {
-          console.error('Error getting album art color:', e);
-          setBgColor('rgb(50, 50, 70)'); // Fallback mais escuro em caso de erro
-        });
+        } catch (fetchError) {
+          console.error(`Fetch workaround failed for ${imageUrl}: ${fetchError}`);
+          updateBackgroundColor(null); // Usar fallback no erro final
+        }
+      };
+
+      attemptDirectColorExtraction();
+
     } else {
-      setBgColor('rgb(26, 20, 36)'); // Default para quando não há música
+      setBgColor('rgb(26, 20, 36)'); // Cor default se não houver música
     }
-  }, [currentSong?.albumArtUrl]);
+  }, [currentSong?.albumArtUrl, currentSong?.id]); // Adicionado currentSong.id para re-trigger em mudança de música com mesma URL de arte
 
   if (!currentSong) {
     return (
@@ -80,7 +84,7 @@ const PlayerPage = () => {
   }
 
   const backgroundStyle = {
-    background: `linear-gradient(to bottom, ${bgColor || 'rgb(88, 28, 135)'} 0%, #100C1C 60%, black 100%)`
+    background: `linear-gradient(to bottom, ${bgColor} 0%, #100C1C 60%, black 100%)`
   };
 
   return (
@@ -108,6 +112,7 @@ const PlayerPage = () => {
           src={currentSong.albumArtUrl.replace('/200/200', '/500/500').replace('/300/300', '/500/500')}
           alt={`Capa de ${currentSong.title}`}
           className="w-full aspect-square rounded-lg shadow-2xl object-cover"
+          crossOrigin="anonymous" // Adicionado para tentar ajudar com CORS em alguns casos
         />
       </div>
 
