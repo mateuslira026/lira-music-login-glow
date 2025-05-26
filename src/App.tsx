@@ -13,7 +13,8 @@ import LibraryPage from "./pages/LibraryPage";
 import ProfilePage from "./pages/ProfilePage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import PlayerPage from "./pages/PlayerPage";
-import AlbumDetailPage from "./pages/AlbumDetailPage"; // Importar AlbumDetailPage
+import AlbumDetailPage from "./pages/AlbumDetailPage";
+import CategoryDetailPage from "./pages/CategoryDetailPage"; // Importar CategoryDetailPage
 import NotFound from "./pages/NotFound";
 import "./App.css";
 
@@ -36,7 +37,9 @@ const App = () => (
             <Route path="/library" element={<LibraryPage />} /> 
             <Route path="/profile" element={<ProfilePage />} /> 
             <Route path="/player" element={<PlayerPage />} />
-            <Route path="/album/:albumId" element={<AlbumDetailPage />} /> {/* Adicionar rota para AlbumDetailPage */}
+            <Route path="/album/:albumId" element={<AlbumDetailPage />} />
+            {/* Adicionar rota para CategoryDetailPage, :categoryTitle é um parâmetro de URL */}
+            <Route path="/category/:categoryTitle" element={<CategoryDetailPage />} /> 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

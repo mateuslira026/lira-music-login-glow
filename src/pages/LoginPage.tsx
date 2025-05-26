@@ -1,14 +1,14 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Mail, Lock, Music2, Chrome } from 'lucide-react'; // Usando Chrome como ícone do Google
+import { Mail, Lock, Music2, Chrome, Eye, EyeOff } from 'lucide-react'; // Usando Chrome como ícone do Google, Eye e EyeOff para senha
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // Estado para visibilidade da senha
   const navigate = useNavigate();
 
   const handleLogin = (e: React.FormEvent) => {
@@ -32,6 +32,10 @@ const LoginPage = () => {
     }, 1500);
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="min-h-screen w-full bg-lira-dark-page flex flex-col items-center justify-center p-4 selection:bg-lira-blue/30 selection:text-white">
       {/* Você pode adicionar uma imagem de fundo aqui no futuro:
@@ -41,7 +45,8 @@ const LoginPage = () => {
         <div className="text-center">
           <Music2 className="mx-auto h-16 w-16 text-lira-blue mb-3" />
           <p className="text-lira-blue font-medium">Bem-vindo à Lira Music</p>
-          <h1 className="text-3xl font-bold text-white mt-1">Entre na sua conta</h1>
+          {/* Ajuste no tamanho do texto para responsividade */}
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mt-1">Entre na sua conta</h1>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-4"> {/* Diminuído o space-y aqui também */}
@@ -67,13 +72,22 @@ const LoginPage = () => {
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" /> {/* Ícone menor */}
               <Input
                 id="password"
-                type="password"
+                type={showPassword ? "text" : "password"} // Altera o tipo do input
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="pl-9 bg-gray-800 border-gray-700 text-white focus:ring-lira-blue focus:border-lira-blue rounded-md placeholder:text-gray-500 h-9 py-1.5 text-sm" /* Tamanho reduzido e padding esquerdo ajustado */
+                // Aumentar padding à direita para o ícone não sobrepor o texto
+                className="px-9 bg-gray-800 border-gray-700 text-white focus:ring-lira-blue focus:border-lira-blue rounded-md placeholder:text-gray-500 h-9 py-1.5 text-sm"
               />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-200"
+                aria-label={showPassword ? "Esconder senha" : "Mostrar senha"}
+              >
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
             </div>
             <div className="text-right">
               <Link to="/forgot-password" className="text-sm text-lira-blue hover:underline">Esqueceu a senha?</Link> {/* Link funcional */}
