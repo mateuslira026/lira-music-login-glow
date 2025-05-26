@@ -1,20 +1,31 @@
 
-import React, { useState } from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { usePlayer } from '@/contexts/PlayerContext';
 import { Button } from '@/components/ui/button';
 import { Play, Pause, SkipForward, SkipBack } from 'lucide-react';
 
 const MiniPlayer = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const currentSong = { // Placeholder
-    title: "Nome da Música Atual",
-    artist: "Artista da Música",
-    albumArtUrl: "https://picsum.photos/seed/currentsong/40/40" // Placeholder image
+  const { currentSong, isPlaying, togglePlay } = usePlayer();
+  const navigate = useNavigate();
+
+  if (!currentSong) {
+    return null; // Don't render if no song is current
+  }
+
+  const handlePlayerClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Navigate only if the click is not on a button
+    if ((e.target as HTMLElement).closest('button')) {
+      return;
+    }
+    navigate('/player');
   };
 
-  const togglePlay = () => setIsPlaying(!isPlaying);
-
   return (
-    <div className="fixed bottom-16 left-0 right-0 bg-lira-dark-card/90 backdrop-blur-md p-3 shadow-lg-top z-40 border-t border-gray-700/50">
+    <div 
+      className="fixed bottom-16 left-0 right-0 bg-lira-dark-card/60 backdrop-blur-md p-3 shadow-lg-top z-40 border-t border-gray-700/50 cursor-pointer"
+      onClick={handlePlayerClick}
+    >
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center space-x-3 flex-1 min-w-0">
           <img 
@@ -33,6 +44,7 @@ const MiniPlayer = () => {
             variant="ghost" 
             size="icon" 
             className="text-white hover:bg-lira-blue/20 hover:text-lira-blue h-8 w-8"
+            onClick={(e) => { e.stopPropagation(); /* TODO: Implement SkipBack */ }}
           >
             <SkipBack className="h-4 w-4" />
           </Button>
@@ -40,7 +52,7 @@ const MiniPlayer = () => {
           <Button 
             variant="ghost" 
             size="icon" 
-            onClick={togglePlay} 
+            onClick={(e) => { e.stopPropagation(); togglePlay(); }} 
             className="text-white hover:bg-lira-blue/20 hover:text-lira-blue h-10 w-10 rounded-full bg-lira-blue/10"
           >
             {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
@@ -50,6 +62,7 @@ const MiniPlayer = () => {
             variant="ghost" 
             size="icon" 
             className="text-white hover:bg-lira-blue/20 hover:text-lira-blue h-8 w-8"
+            onClick={(e) => { e.stopPropagation(); /* TODO: Implement SkipForward */ }}
           >
             <SkipForward className="h-4 w-4" />
           </Button>
