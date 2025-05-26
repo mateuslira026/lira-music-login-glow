@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Play, Pause, SkipForward, SkipBack } from 'lucide-react';
 
 const MiniPlayer = () => {
-  const { currentSong, isPlaying, togglePlay } = usePlayer();
+  const { currentSong, isPlaying, togglePlay, playNext, playPrevious, playlist, currentTrackIndex } = usePlayer();
   const navigate = useNavigate();
 
   if (!currentSong) {
@@ -21,9 +21,11 @@ const MiniPlayer = () => {
     navigate('/player');
   };
 
+  const canSkip = playlist.length > 1 && currentTrackIndex !== null;
+
   return (
     <div 
-      className="fixed bottom-16 left-0 right-0 bg-lira-dark-card/60 backdrop-blur-md p-3 shadow-lg-top z-40 border-t border-gray-700/50 cursor-pointer"
+      className="fixed bottom-16 left-0 right-0 bg-lira-dark-card/80 backdrop-blur-md p-3 shadow-lg-top z-40 border-t border-gray-700/50 cursor-pointer"
       onClick={handlePlayerClick}
     >
       <div className="container mx-auto flex items-center justify-between">
@@ -43,8 +45,9 @@ const MiniPlayer = () => {
           <Button 
             variant="ghost" 
             size="icon" 
-            className="text-white hover:bg-lira-blue/20 hover:text-lira-blue h-8 w-8"
-            onClick={(e) => { e.stopPropagation(); /* TODO: Implement SkipBack */ }}
+            className="text-white hover:bg-lira-blue/20 hover:text-lira-blue h-8 w-8 disabled:opacity-50 disabled:hover:bg-transparent disabled:text-gray-500"
+            onClick={(e) => { e.stopPropagation(); playPrevious(); }}
+            disabled={!canSkip}
           >
             <SkipBack className="h-4 w-4" />
           </Button>
@@ -61,8 +64,9 @@ const MiniPlayer = () => {
           <Button 
             variant="ghost" 
             size="icon" 
-            className="text-white hover:bg-lira-blue/20 hover:text-lira-blue h-8 w-8"
-            onClick={(e) => { e.stopPropagation(); /* TODO: Implement SkipForward */ }}
+            className="text-white hover:bg-lira-blue/20 hover:text-lira-blue h-8 w-8 disabled:opacity-50 disabled:hover:bg-transparent disabled:text-gray-500"
+            onClick={(e) => { e.stopPropagation(); playNext(); }}
+            disabled={!canSkip}
           >
             <SkipForward className="h-4 w-4" />
           </Button>

@@ -4,7 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { PlayerProvider } from "./contexts/PlayerContext"; // Import PlayerProvider
+import { PlayerProvider } from "./contexts/PlayerContext";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
@@ -12,7 +12,8 @@ import SearchPage from "./pages/SearchPage";
 import LibraryPage from "./pages/LibraryPage";
 import ProfilePage from "./pages/ProfilePage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
-import PlayerPage from "./pages/PlayerPage"; // Import PlayerPage
+import PlayerPage from "./pages/PlayerPage";
+import AlbumDetailPage from "./pages/AlbumDetailPage"; // Importar AlbumDetailPage
 import NotFound from "./pages/NotFound";
 import "./App.css";
 
@@ -20,7 +21,7 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <PlayerProvider> {/* Wrap with PlayerProvider */}
+    <PlayerProvider>
       <TooltipProvider>
         <Toaster />
         <Sonner />
@@ -34,7 +35,8 @@ const App = () => (
             <Route path="/search" element={<SearchPage />} /> 
             <Route path="/library" element={<LibraryPage />} /> 
             <Route path="/profile" element={<ProfilePage />} /> 
-            <Route path="/player" element={<PlayerPage />} /> {/* Add PlayerPage route */}
+            <Route path="/player" element={<PlayerPage />} />
+            <Route path="/album/:albumId" element={<AlbumDetailPage />} /> {/* Adicionar rota para AlbumDetailPage */}
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

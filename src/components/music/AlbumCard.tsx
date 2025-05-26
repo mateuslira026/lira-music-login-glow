@@ -1,13 +1,16 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
 import { Play } from 'lucide-react';
+import { Song as PlayerSong } from '@/contexts/PlayerContext'; // Importar Song
 
 export interface Album {
   id: string;
   title: string;
   artist: string;
   coverUrl: string;
+  songs?: PlayerSong[]; // Adicionar songs opcionalmente, se precisar aqui
 }
 
 interface AlbumCardProps {
@@ -15,8 +18,17 @@ interface AlbumCardProps {
 }
 
 const AlbumCard: React.FC<AlbumCardProps> = ({ album }) => {
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate(`/album/${album.id}`);
+  };
+
   return (
-    <Card className="w-full bg-lira-dark-card border-transparent rounded-lg overflow-hidden shadow-lg hover:shadow-lira-blue/30 transition-shadow duration-300 group cursor-pointer">
+    <Card 
+      className="w-full bg-lira-dark-card border-transparent rounded-lg overflow-hidden shadow-lg hover:shadow-lira-blue/30 transition-shadow duration-300 group cursor-pointer"
+      onClick={handleCardClick} // Adicionar onClick handler
+    >
       <CardContent className="p-0 relative">
         <img 
           src={album.coverUrl} 
