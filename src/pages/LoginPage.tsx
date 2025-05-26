@@ -1,9 +1,10 @@
+
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Mail, Lock, Music2 } from 'lucide-react';
+import { Mail, Lock, Music2, Chrome } from 'lucide-react'; // Usando Chrome como ícone do Google
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -43,11 +44,11 @@ const LoginPage = () => {
           <h1 className="text-3xl font-bold text-white mt-1">Entre na sua conta</h1>
         </div>
 
-        <form onSubmit={handleLogin} className="space-y-6">
-          <div className="space-y-2">
-            <Label htmlFor="email" className="text-gray-300">Email</Label>
+        <form onSubmit={handleLogin} className="space-y-4"> {/* Diminuído o space-y aqui também */}
+          <div className="space-y-1.5"> {/* Diminuído o space-y */}
+            <Label htmlFor="email" className="text-gray-300 text-sm">Email</Label> {/* Texto do label menor */}
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" /> {/* Ícone menor */}
               <Input
                 id="email"
                 type="email"
@@ -55,15 +56,15 @@ const LoginPage = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="pl-10 bg-gray-800 border-gray-700 text-white focus:ring-lira-blue focus:border-lira-blue rounded-md placeholder:text-gray-500"
+                className="pl-9 bg-gray-800 border-gray-700 text-white focus:ring-lira-blue focus:border-lira-blue rounded-md placeholder:text-gray-500 h-9 py-1.5 text-sm" /* Tamanho reduzido e padding esquerdo ajustado */
               />
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="password" className="text-gray-300">Senha</Label>
+          <div className="space-y-1.5"> {/* Diminuído o space-y */}
+            <Label htmlFor="password" className="text-gray-300 text-sm">Senha</Label> {/* Texto do label menor */}
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" /> {/* Ícone menor */}
               <Input
                 id="password"
                 type="password"
@@ -71,17 +72,17 @@ const LoginPage = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="pl-10 bg-gray-800 border-gray-700 text-white focus:ring-lira-blue focus:border-lira-blue rounded-md placeholder:text-gray-500"
+                className="pl-9 bg-gray-800 border-gray-700 text-white focus:ring-lira-blue focus:border-lira-blue rounded-md placeholder:text-gray-500 h-9 py-1.5 text-sm" /* Tamanho reduzido e padding esquerdo ajustado */
               />
             </div>
             <div className="text-right">
-              <Link to="#" className="text-sm text-lira-blue hover:underline">Esqueceu a senha?</Link>
+              <Link to="/forgot-password" className="text-sm text-lira-blue hover:underline">Esqueceu a senha?</Link> {/* Link funcional */}
             </div>
           </div>
 
           <Button 
             type="submit" 
-            className="w-full bg-lira-blue text-lira-blue-foreground hover:bg-opacity-85 active:scale-[0.98] transition-all duration-150 py-3 text-base font-semibold rounded-md"
+            className="w-full bg-lira-blue text-lira-blue-foreground hover:bg-opacity-85 active:scale-[0.98] transition-all duration-150 py-2 text-sm font-semibold rounded-md" /* Tamanho reduzido */
           >
             Entrar e Curtir a Música
           </Button>
@@ -99,15 +100,10 @@ const LoginPage = () => {
         <Button
           variant="outline"
           onClick={handleGoogleLogin}
-          className="w-full bg-white text-gray-700 hover:bg-gray-100 border-gray-300 active:scale-[0.98] transition-all duration-150 py-3 text-base font-semibold rounded-md shadow-sm hover:shadow-md"
+          className="w-full bg-white text-gray-700 hover:bg-gray-100 border-gray-300 active:scale-[0.98] transition-all duration-150 py-2 text-sm font-semibold rounded-md shadow-sm hover:shadow-md flex items-center justify-center" /* Tamanho reduzido e flex para alinhar ícone e texto */
         >
-          <span className="mr-2 font-bold text-lg" style={{ fontFamily: 'Arial, sans-serif', color: '#4285F4' }}>G</span>
-          <span style={{ color: '#DB4437' }}>o</span>
-          <span style={{ color: '#F4B400' }}>o</span>
-          <span style={{ color: '#4285F4' }}>g</span>
-          <span style={{ color: '#0F9D58' }}>l</span>
-          <span style={{ color: '#DB4437' }}>e</span>
-          <span className="ml-1">Entrar com o Google</span>
+          <Chrome className="h-4 w-4 mr-2" /> {/* Ícone do Google (Chrome como substituto) e tamanho ajustado */}
+          <span>Entrar com o Google</span>
         </Button>
 
         <p className="text-center text-sm text-gray-400">
