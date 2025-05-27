@@ -9,8 +9,9 @@ const MiniPlayer = () => {
   const { currentSong, isPlaying, togglePlay, playNext, playPrevious, playlist, currentTrackIndex } = usePlayer();
   const navigate = useNavigate();
 
+  // Don't render if no song is current
   if (!currentSong) {
-    return null; // Don't render if no song is current
+    return null;
   }
 
   const handlePlayerClick = (e: React.MouseEvent<HTMLDivElement>) => {
