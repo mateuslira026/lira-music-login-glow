@@ -23,6 +23,17 @@ const createPlaceholderSongs = (albumId: string, artistName: string, albumCover:
   }));
 };
 
+const createPlaceholderEpisodes = (podcastId: string, showHost: string, showCover: string, showName: string, numEpisodes: number): PlayerSong[] => {
+  return Array.from({ length: numEpisodes }, (s, episodeIdx) => ({
+    id: `${podcastId}-episode-${episodeIdx + 1}`,
+    title: `Episódio ${episodeIdx + 1}: Tema Interessante`,
+    artist: showHost, // Using artist field for the host
+    albumArtUrl: showCover, // Using albumArtUrl for the podcast show cover
+    albumTitle: showName, // Using albumTitle for the podcast show name
+    trackNumber: episodeIdx + 1,
+  }));
+};
+
 const placeholderAlbums: AlbumWithSongs[] = Array.from({ length: 20 }, (_, i) => { // Increased to 20 for more variety
   const albumId = `album-${i + 1}`;
   const albumCover = `https://picsum.photos/seed/${albumId}/200/200`;
@@ -69,6 +80,20 @@ const flashbackData: AlbumWithSongs[] = Array.from({ length: 6 }, (_, i) => {
   };
 });
 
+const placeholderPodcasts: AlbumWithSongs[] = Array.from({ length: 7 }, (_, i) => {
+  const podcastId = `podcast-${i + 1}`;
+  const podcastCover = `https://picsum.photos/seed/${podcastId}/200/200`; // Using different seeds for variety
+  const showHost = `Apresentador ${i + 1}`;
+  const showName = `Podcast Show ${i + 1}`;
+  return {
+    id: podcastId,
+    title: showName, // Podcast Show Name
+    artist: showHost, // Podcast Host
+    coverUrl: podcastCover,
+    songs: createPlaceholderEpisodes(podcastId, showHost, podcastCover, showName, 3 + (i % 3)), // songs are episodes
+  };
+});
+
 
 export const getAlbumById = (id: string): AlbumWithSongs | undefined => {
   // Combine all album sources for lookup
@@ -76,6 +101,7 @@ export const getAlbumById = (id: string): AlbumWithSongs | undefined => {
     ...placeholderAlbums,
     ...seusArtistasFavoritosData,
     ...flashbackData,
+    ...placeholderPodcasts, // Include podcasts in the lookup
   ];
   return allAlbums.find(album => album.id === id);
 }
@@ -92,6 +118,7 @@ const HomePage = () => {
           <div className="space-y-6 mt-4">
             <MusicSection title="Mixes Mais Ouvidos" albums={mixesMaisOuvidos} />
             <MusicSection title="Seus artistas favoritos" albums={seusArtistasFavoritosData} />
+            <MusicSection title="Podcasts" albums={placeholderPodcasts} />
             
             {currentSong && (
               <MusicSection title="Recentes" albums={recentesAlbums} />

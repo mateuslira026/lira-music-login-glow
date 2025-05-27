@@ -22,19 +22,19 @@ const AlbumDetailPage = () => {
     );
   }
 
-  const handlePlayAlbumAndNavigate = (startIndex: number = 0) => {
+  const handlePlayAlbum = (startIndex: number = 0) => {
     playPlaylist(album.songs, startIndex);
-    navigate('/player');
+    // Removed navigate('/player')
   };
 
-  const handlePlaySongAndNavigate = (songIndex: number) => {
+  const handlePlaySong = (songIndex: number) => {
     playPlaylist(album.songs, songIndex);
-    navigate('/player');
+    // Removed navigate('/player')
   };
   
-  const handleTogglePlayAndNavigate = () => {
+  const handleTogglePlayCurrent = () => {
     togglePlay();
-    navigate('/player');
+    // Removed navigate('/player')
   };
 
   // Determina se a música específica está tocando
@@ -65,7 +65,7 @@ const AlbumDetailPage = () => {
               <p className="text-lg text-gray-300 mb-1">Por {album.artist}</p>
               <p className="text-sm text-gray-400 mb-4">{album.songs.length} músicas</p>
               <Button 
-                onClick={() => handlePlayAlbumAndNavigate()} 
+                onClick={() => handlePlayAlbum()} 
                 className="bg-lira-blue hover:bg-lira-blue/80 text-white px-6 py-3 rounded-full text-base font-semibold"
               >
                 <PlayCircle className="mr-2 h-5 w-5" /> Tocar Álbum
@@ -82,9 +82,9 @@ const AlbumDetailPage = () => {
                             ${currentSong?.id === song.id ? 'bg-lira-dark-card' : 'bg-lira-dark-card/30'}`}
                 onClick={() => {
                   if (currentSong?.id === song.id) {
-                    handleTogglePlayAndNavigate();
+                    handleTogglePlayCurrent();
                   } else {
-                    handlePlaySongAndNavigate(index);
+                    handlePlaySong(index);
                   }
                 }}
               >
