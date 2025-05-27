@@ -1,4 +1,5 @@
 
+```tsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePlayer } from '@/contexts/PlayerContext';
@@ -24,7 +25,7 @@ const MiniPlayer = () => {
 
   return (
     <div 
-      className="fixed bottom-16 left-0 right-0 bg-black/70 backdrop-blur-lg p-3 shadow-lg-top z-40 border-t border-gray-700/30 cursor-pointer" // Alterado para bg-black/70 backdrop-blur-lg e border mais sutil
+      className="fixed bottom-16 left-0 right-0 bg-black/40 backdrop-blur-md p-3 shadow-lg-top z-40 border-t border-white/10 cursor-pointer" // Fundo mais transparente, blur ajustado e borda mais clara
       onClick={handlePlayerClick}
     >
       <div className="container mx-auto flex items-center justify-between">
@@ -76,3 +77,4 @@ const MiniPlayer = () => {
 };
 
 export default MiniPlayer;
+```
