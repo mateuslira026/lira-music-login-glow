@@ -1,7 +1,6 @@
 
 import React from 'react';
 import AppHeader from '@/components/layout/AppHeader';
-// SearchBar não é mais importado/usado aqui
 import MusicSection from '@/components/music/MusicSection';
 import MiniPlayer from '@/components/music/MiniPlayer';
 import BottomNav from '@/components/layout/BottomNav';
@@ -13,24 +12,28 @@ export interface AlbumWithSongs extends Album {
   songs: PlayerSong[];
 }
 
-const placeholderAlbums: AlbumWithSongs[] = Array.from({ length: 10 }, (_, i) => {
+const createPlaceholderSongs = (albumId: string, artistName: string, albumCover: string, albumTitle: string, numSongs: number): PlayerSong[] => {
+  return Array.from({ length: numSongs }, (s, songIdx) => ({
+    id: `${albumId}-song-${songIdx + 1}`,
+    title: `Música ${songIdx + 1}`,
+    artist: artistName,
+    albumArtUrl: albumCover,
+    albumTitle: albumTitle,
+    trackNumber: songIdx + 1,
+  }));
+};
+
+const placeholderAlbums: AlbumWithSongs[] = Array.from({ length: 20 }, (_, i) => { // Increased to 20 for more variety
   const albumId = `album-${i + 1}`;
   const albumCover = `https://picsum.photos/seed/${albumId}/200/200`;
-  const artistName = `Artista Top ${i % 4 + 1}`;
-  const albumTitle = `Álbum Fantástico ${i + 1}`;
+  const artistName = `Artista Variado ${i % 5 + 1}`;
+  const albumTitle = `Coletânea ${i + 1}`;
   return {
     id: albumId,
     title: albumTitle,
     artist: artistName,
     coverUrl: albumCover,
-    songs: Array.from({ length: 5 + (i % 5) }, (s, songIdx) => ({
-      id: `${albumId}-song-${songIdx + 1}`,
-      title: `Música ${songIdx + 1} do Álbum ${i + 1}`,
-      artist: artistName,
-      albumArtUrl: albumCover,
-      albumTitle: albumTitle,
-      trackNumber: songIdx + 1,
-    })),
+    songs: createPlaceholderSongs(albumId, artistName, albumCover, albumTitle, 5 + (i % 5)),
   };
 });
 
@@ -39,8 +42,42 @@ const recentesAlbums = [...placeholderAlbums].sort(() => 0.5 - Math.random()).sl
 const paraVoceAlbums = [...placeholderAlbums].sort(() => Math.random() - 0.5).slice(0, 6);
 const novosLancamentosAlbums = [...placeholderAlbums].sort(() => Math.random() - 0.5).slice(0, 5);
 
+const seusArtistasFavoritosData: AlbumWithSongs[] = Array.from({ length: 5 }, (_, i) => {
+  const artistId = `fav-artist-${i + 1}`;
+  const artistName = `Artista Favorito ${i + 1}`;
+  const coverUrl = `https://picsum.photos/seed/${artistId}/200/200`;
+  return {
+    id: artistId,
+    title: artistName,
+    artist: "Destaque", // Subtitle for artist card
+    coverUrl: coverUrl,
+    songs: createPlaceholderSongs(artistId, artistName, coverUrl, artistName, 1 + (i % 3)), // Few representative songs
+  };
+});
+
+const flashbackData: AlbumWithSongs[] = Array.from({ length: 6 }, (_, i) => {
+  const flashbackId = `flashback-${i + 1}`;
+  const year = 1980 + i * 5;
+  const title = `Flashback ${year}s`;
+  const coverUrl = `https://picsum.photos/seed/${flashbackId}/200/200`;
+  return {
+    id: flashbackId,
+    title: title,
+    artist: "Clássicos Inesquecíveis",
+    coverUrl: coverUrl,
+    songs: createPlaceholderSongs(flashbackId, "Vários Artistas", coverUrl, title, 7 + (i % 4)),
+  };
+});
+
+
 export const getAlbumById = (id: string): AlbumWithSongs | undefined => {
-  return placeholderAlbums.find(album => album.id === id);
+  // Combine all album sources for lookup
+  const allAlbums = [
+    ...placeholderAlbums,
+    ...seusArtistasFavoritosData,
+    ...flashbackData,
+  ];
+  return allAlbums.find(album => album.id === id);
 }
 
 const HomePage = () => {
@@ -52,15 +89,15 @@ const HomePage = () => {
       
       <ScrollArea className="flex-1 overflow-y-auto pb-36">
         <div className="pt-2 pb-4">
-          {/* SearchBar removido daqui */}
-          <div className="space-y-6 mt-4"> {/* Mantido mt-4 para espaçamento */}
-            {/* Título da seção alterado */}
+          <div className="space-y-6 mt-4">
             <MusicSection title="Mixes Mais Ouvidos" albums={mixesMaisOuvidos} />
+            <MusicSection title="Seus artistas favoritos" albums={seusArtistasFavoritosData} />
             
             {currentSong && (
               <MusicSection title="Recentes" albums={recentesAlbums} />
             )}
             
+            <MusicSection title="Flashback" albums={flashbackData} />
             <MusicSection title="Novos Lançamentos" albums={novosLancamentosAlbums} />
             <MusicSection title="Para Você" albums={paraVoceAlbums} />
           </div>
