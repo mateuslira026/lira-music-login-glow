@@ -1,5 +1,4 @@
 
-```tsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePlayer } from '@/contexts/PlayerContext';
@@ -77,4 +76,3 @@ const MiniPlayer = () => {
 };
 
 export default MiniPlayer;
-```
