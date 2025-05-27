@@ -1,9 +1,6 @@
-
 import React from 'react';
 import AppHeader from '@/components/layout/AppHeader';
 import MusicSection from '@/components/music/MusicSection';
-import MiniPlayer from '@/components/music/MiniPlayer';
-import BottomNav from '@/components/layout/BottomNav';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Album } from '@/components/music/AlbumCard'; 
 import { usePlayer, Song as PlayerSong } from '@/contexts/PlayerContext';
@@ -131,8 +128,7 @@ const HomePage = () => {
         </div>
       </ScrollArea>
       
-      <MiniPlayer />
-      <BottomNav />
+      {/* MiniPlayer e BottomNav foram movidos para App.tsx */}
     </div>
   );
 };

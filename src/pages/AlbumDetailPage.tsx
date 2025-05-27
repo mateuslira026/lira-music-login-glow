@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getAlbumById } from './HomePage'; // Importar a função para buscar álbuns
+import { getAlbumById } from './HomePage'; 
 import { usePlayer, Song } from '@/contexts/PlayerContext';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, PlayCircle, Music } from 'lucide-react';
@@ -24,24 +24,18 @@ const AlbumDetailPage = () => {
 
   const handlePlayAlbum = (startIndex: number = 0) => {
     playPlaylist(album.songs, startIndex);
-    // Removed navigate('/player')
   };
 
   const handlePlaySong = (songIndex: number) => {
     playPlaylist(album.songs, songIndex);
-    // Removed navigate('/player')
   };
   
   const handleTogglePlayCurrent = () => {
     togglePlay();
-    // Removed navigate('/player')
   };
 
-  // Determina se a música específica está tocando
   const isSongPlaying = (song: Song) => currentSong?.id === song.id && isPlaying;
-  // Determina se a música específica está pausada mas é a atual
   const isSongCurrentPaused = (song: Song) => currentSong?.id === song.id && !isPlaying;
-
 
   return (
     <div className="flex flex-col min-h-screen h-full bg-gradient-to-b from-gray-800 via-lira-dark-page to-black text-white">
@@ -52,7 +46,7 @@ const AlbumDetailPage = () => {
         <h1 className="text-xl font-semibold truncate">{album.title}</h1>
       </header>
 
-      <ScrollArea className="flex-1">
+      <ScrollArea className="flex-1 pb-36"> {/* Adicionado pb-36 aqui */}
         <div className="p-4 md:p-6">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-6 mb-8">
             <img 
@@ -107,7 +101,7 @@ const AlbumDetailPage = () => {
           </ul>
         </div>
       </ScrollArea>
-      {/* O MiniPlayer global continuará visível se uma música estiver tocando */}
+      {/* O MiniPlayer global e BottomNav agora são renderizados globalmente e serão visíveis */}
     </div>
   );
 };

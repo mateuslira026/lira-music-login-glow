@@ -14,7 +14,6 @@ const MiniPlayer = () => {
   }
 
   const handlePlayerClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    // Navigate only if the click is not on a button
     if ((e.target as HTMLElement).closest('button')) {
       return;
     }
@@ -25,7 +24,7 @@ const MiniPlayer = () => {
 
   return (
     <div 
-      className="fixed bottom-16 left-0 right-0 bg-lira-dark-card/80 backdrop-blur-md p-3 shadow-lg-top z-40 border-t border-gray-700/50 cursor-pointer"
+      className="fixed bottom-16 left-0 right-0 bg-black/70 backdrop-blur-lg p-3 shadow-lg-top z-40 border-t border-gray-700/30 cursor-pointer" // Alterado para bg-black/70 backdrop-blur-lg e border mais sutil
       onClick={handlePlayerClick}
     >
       <div className="container mx-auto flex items-center justify-between">
