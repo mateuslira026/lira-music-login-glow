@@ -24,14 +24,14 @@ const createPlaceholderEpisodes = (podcastId: string, showHost: string, showCove
   return Array.from({ length: numEpisodes }, (s, episodeIdx) => ({
     id: `${podcastId}-episode-${episodeIdx + 1}`,
     title: `Episódio ${episodeIdx + 1}: Tema Interessante`,
-    artist: showHost, // Using artist field for the host
-    albumArtUrl: showCover, // Using albumArtUrl for the podcast show cover
-    albumTitle: showName, // Using albumTitle for the podcast show name
+    artist: showHost,
+    albumArtUrl: showCover,
+    albumTitle: showName,
     trackNumber: episodeIdx + 1,
   }));
 };
 
-const placeholderAlbums: AlbumWithSongs[] = Array.from({ length: 20 }, (_, i) => { // Increased to 20 for more variety
+const placeholderAlbums: AlbumWithSongs[] = Array.from({ length: 20 }, (_, i) => {
   const albumId = `album-${i + 1}`;
   const albumCover = `https://picsum.photos/seed/${albumId}/200/200`;
   const artistName = `Artista Variado ${i % 5 + 1}`;
@@ -57,9 +57,9 @@ const seusArtistasFavoritosData: AlbumWithSongs[] = Array.from({ length: 5 }, (_
   return {
     id: artistId,
     title: artistName,
-    artist: "Destaque", // Subtitle for artist card
+    artist: "Destaque",
     coverUrl: coverUrl,
-    songs: createPlaceholderSongs(artistId, artistName, coverUrl, artistName, 1 + (i % 3)), // Few representative songs
+    songs: createPlaceholderSongs(artistId, artistName, coverUrl, artistName, 1 + (i % 3)),
   };
 });
 
@@ -79,26 +79,24 @@ const flashbackData: AlbumWithSongs[] = Array.from({ length: 6 }, (_, i) => {
 
 const placeholderPodcasts: AlbumWithSongs[] = Array.from({ length: 7 }, (_, i) => {
   const podcastId = `podcast-${i + 1}`;
-  const podcastCover = `https://picsum.photos/seed/${podcastId}/200/200`; // Using different seeds for variety
+  const podcastCover = `https://picsum.photos/seed/${podcastId}/200/200`;
   const showHost = `Apresentador ${i + 1}`;
   const showName = `Podcast Show ${i + 1}`;
   return {
     id: podcastId,
-    title: showName, // Podcast Show Name
-    artist: showHost, // Podcast Host
+    title: showName,
+    artist: showHost,
     coverUrl: podcastCover,
-    songs: createPlaceholderEpisodes(podcastId, showHost, podcastCover, showName, 3 + (i % 3)), // songs are episodes
+    songs: createPlaceholderEpisodes(podcastId, showHost, podcastCover, showName, 3 + (i % 3)),
   };
 });
 
-
 export const getAlbumById = (id: string): AlbumWithSongs | undefined => {
-  // Combine all album sources for lookup
   const allAlbums = [
     ...placeholderAlbums,
     ...seusArtistasFavoritosData,
     ...flashbackData,
-    ...placeholderPodcasts, // Include podcasts in the lookup
+    ...placeholderPodcasts,
   ];
   return allAlbums.find(album => album.id === id);
 }
@@ -110,8 +108,8 @@ const HomePage = () => {
     <div className="flex flex-col min-h-screen h-full bg-gradient-to-b from-lira-dark-page to-black text-white">
       <AppHeader />
       
-      <ScrollArea className="flex-1 overflow-y-auto pb-36">
-        <div className="pt-2 pb-4">
+      <ScrollArea className="flex-1 overflow-y-auto">
+        <div className="pt-2 pb-32">
           <div className="space-y-6 mt-4">
             <MusicSection title="Mixes Mais Ouvidos" albums={mixesMaisOuvidos} />
             <MusicSection title="Seus artistas favoritos" albums={seusArtistasFavoritosData} />
@@ -127,8 +125,6 @@ const HomePage = () => {
           </div>
         </div>
       </ScrollArea>
-      
-      {/* MiniPlayer e BottomNav foram movidos para App.tsx */}
     </div>
   );
 };

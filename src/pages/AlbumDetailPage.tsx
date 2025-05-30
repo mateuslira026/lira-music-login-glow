@@ -46,8 +46,8 @@ const AlbumDetailPage = () => {
         <h1 className="text-xl font-semibold truncate">{album.title}</h1>
       </header>
 
-      <ScrollArea className="flex-1 pb-36"> {/* Adicionado pb-36 aqui */}
-        <div className="p-4 md:p-6">
+      <ScrollArea className="flex-1">
+        <div className="p-4 md:p-6 pb-32">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-6 mb-8">
             <img 
               src={album.coverUrl.replace('/200/200', '/300/300')} 
@@ -94,14 +94,12 @@ const AlbumDetailPage = () => {
                   </div>
                 </div>
                 <Button variant="ghost" size="icon" className="opacity-0 group-hover:opacity-100 text-gray-300 hover:text-white">
-                  {/* <MoreHorizontal className="h-5 w-5" /> */}
                 </Button>
               </li>
             ))}
           </ul>
         </div>
       </ScrollArea>
-      {/* O MiniPlayer global e BottomNav agora são renderizados globalmente e serão visíveis */}
     </div>
   );
 };
