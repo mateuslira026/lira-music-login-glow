@@ -9,8 +9,8 @@ const MiniPlayer = () => {
   const { currentSong, isPlaying, togglePlay, playNext, playPrevious, playlist, currentTrackIndex } = usePlayer();
   const navigate = useNavigate();
 
-  // Don't render if no song is current or not playing
-  if (!currentSong || !isPlaying) {
+  // Don't render if no song is current
+  if (!currentSong) {
     return null;
   }
 
