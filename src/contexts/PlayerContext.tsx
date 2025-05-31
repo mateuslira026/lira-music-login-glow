@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
 
 export interface Song {
@@ -6,8 +5,8 @@ export interface Song {
   title: string;
   artist: string;
   albumArtUrl: string;
-  albumTitle?: string; // Adicionado
-  trackNumber?: number; // Adicionado
+  albumTitle?: string; 
+  trackNumber?: number; 
   // duration?: number; // Futuramente
 }
 
@@ -21,6 +20,9 @@ interface PlayerContextType {
   playPrevious: () => void;
   isPlaying: boolean;
   togglePlay: () => void;
+  likedSongs: Song[];
+  toggleLike: (song: Song) => void;
+  isLiked: (songId: string) => boolean;
 }
 
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
@@ -30,12 +32,28 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   const [playlist, setPlaylist] = useState<Song[]>([]);
   const [currentTrackIndex, setCurrentTrackIndex] = useState<number | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [likedSongs, setLikedSongs] = useState<Song[]>([]);
 
   const togglePlay = () => {
     if (currentSong) {
       setIsPlaying(!isPlaying);
     }
   };
+
+  const toggleLike = useCallback((song: Song) => {
+    setLikedSongs(prev => {
+      const isAlreadyLiked = prev.some(likedSong => likedSong.id === song.id);
+      if (isAlreadyLiked) {
+        return prev.filter(likedSong => likedSong.id !== song.id);
+      } else {
+        return [...prev, song];
+      }
+    });
+  }, []);
+
+  const isLiked = useCallback((songId: string) => {
+    return likedSongs.some(song => song.id === songId);
+  }, [likedSongs]);
 
   const setCurrentSong = useCallback((song: Song | null) => {
     setCurrentSongInternal(song);
@@ -88,7 +106,6 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     }
   }, [playlist, currentTrackIndex]);
 
-
   return (
     <PlayerContext.Provider value={{ 
       currentSong, 
@@ -99,7 +116,10 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
       playNext,
       playPrevious,
       isPlaying, 
-      togglePlay 
+      togglePlay,
+      likedSongs,
+      toggleLike,
+      isLiked
     }}>
       {children}
     </PlayerContext.Provider>

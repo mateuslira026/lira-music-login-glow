@@ -1,22 +1,21 @@
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePlayer } from '@/contexts/PlayerContext';
 import { Button } from '@/components/ui/button';
-import { Play, Pause, SkipForward, SkipBack } from 'lucide-react';
+import { Play, Pause, SkipForward, SkipBack, Heart } from 'lucide-react';
 import { FastAverageColor, FastAverageColorResult } from 'fast-average-color';
 
 const MiniPlayer = () => {
-  const { currentSong, isPlaying, togglePlay, playNext, playPrevious, playlist, currentTrackIndex } = usePlayer();
+  const { currentSong, isPlaying, togglePlay, playNext, playPrevious, playlist, currentTrackIndex, toggleLike, isLiked } = usePlayer();
   const navigate = useNavigate();
-  const [bgColor, setBgColor] = useState<string>('rgb(88, 28, 135)'); // Fallback roxo escuro
+  const [bgColor, setBgColor] = useState<string>('rgb(88, 28, 135)');
 
   useEffect(() => {
     if (currentSong?.albumArtUrl) {
       const fac = new FastAverageColor();
       let imageUrl = currentSong.albumArtUrl;
       if (imageUrl.includes('picsum.photos')) {
-        imageUrl = `${imageUrl}?ts=${new Date().getTime()}`; // Ensure timestamp key is unique
+        imageUrl = `${imageUrl}?ts=${new Date().getTime()}`;
       }
 
       const updateBackgroundColor = (colorResult: FastAverageColorResult | null) => {
@@ -71,7 +70,6 @@ const MiniPlayer = () => {
     }
   }, [currentSong?.albumArtUrl, currentSong?.id]);
 
-  // Don't render if no song is current
   if (!currentSong) {
     return null;
   }
@@ -83,7 +81,15 @@ const MiniPlayer = () => {
     navigate('/player');
   };
 
+  const handleLikeClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (currentSong) {
+      toggleLike(currentSong);
+    }
+  };
+
   const canSkip = playlist.length > 1 && currentTrackIndex !== null;
+  const songIsLiked = currentSong ? isLiked(currentSong.id) : false;
 
   const backgroundStyle = {
     background: `linear-gradient(to right, ${bgColor} 0%, rgba(0,0,0,0.3) 100%)`
@@ -91,7 +97,7 @@ const MiniPlayer = () => {
 
   return (
     <div 
-      className="fixed bottom-12 left-0 right-0 backdrop-blur-sm p-2 shadow-lg-top z-40 border-t border-white/5 cursor-pointer"
+      className="fixed bottom-10 left-0 right-0 backdrop-blur-sm p-2 shadow-lg-top z-40 border-t border-white/5 cursor-pointer"
       style={backgroundStyle}
       onClick={handlePlayerClick}
     >
@@ -136,6 +142,15 @@ const MiniPlayer = () => {
             disabled={!canSkip}
           >
             <SkipForward className="h-3 w-3" />
+          </Button>
+
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className={`h-7 w-7 hover:bg-transparent ${songIsLiked ? 'text-red-500 hover:text-red-400' : 'text-white hover:text-red-500'}`}
+            onClick={handleLikeClick}
+          >
+            <Heart className={`h-3 w-3 ${songIsLiked ? 'fill-current' : ''}`} />
           </Button>
         </div>
       </div>
