@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
 
 export interface Song {
@@ -76,6 +77,7 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   }, [playlist]);
 
   const playPlaylist = useCallback((songs: Song[], startIndex: number = 0) => {
+    console.log('playPlaylist called with:', songs.length, 'songs, startIndex:', startIndex);
     setPlaylist(songs);
     if (songs.length > 0 && startIndex < songs.length) {
       setCurrentTrackIndex(startIndex);
@@ -89,8 +91,10 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   }, []);
 
   const playNext = useCallback(() => {
+    console.log('playNext called - playlist length:', playlist.length, 'currentTrackIndex:', currentTrackIndex);
     if (playlist.length > 0 && currentTrackIndex !== null) {
       const nextIndex = (currentTrackIndex + 1) % playlist.length;
+      console.log('Moving to next index:', nextIndex, 'song:', playlist[nextIndex]?.title);
       setCurrentTrackIndex(nextIndex);
       setCurrentSongInternal(playlist[nextIndex]);
       setIsPlaying(true);
@@ -98,8 +102,10 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   }, [playlist, currentTrackIndex]);
 
   const playPrevious = useCallback(() => {
+    console.log('playPrevious called - playlist length:', playlist.length, 'currentTrackIndex:', currentTrackIndex);
     if (playlist.length > 0 && currentTrackIndex !== null) {
       const prevIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+      console.log('Moving to previous index:', prevIndex, 'song:', playlist[prevIndex]?.title);
       setCurrentTrackIndex(prevIndex);
       setCurrentSongInternal(playlist[prevIndex]);
       setIsPlaying(true);

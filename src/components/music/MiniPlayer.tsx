@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePlayer } from '@/contexts/PlayerContext';
@@ -97,7 +98,7 @@ const MiniPlayer = () => {
 
   return (
     <div 
-      className="fixed bottom-10 left-0 right-0 backdrop-blur-sm p-2 shadow-lg-top z-40 border-t border-white/5 cursor-pointer"
+      className="fixed bottom-12 left-0 right-0 backdrop-blur-sm p-2 shadow-lg-top z-40 border-t border-white/5 cursor-pointer mb-2"
       style={backgroundStyle}
       onClick={handlePlayerClick}
     >
@@ -119,7 +120,11 @@ const MiniPlayer = () => {
             variant="ghost" 
             size="icon" 
             className="text-white hover:bg-transparent hover:text-lira-blue h-7 w-7 disabled:opacity-50 disabled:hover:bg-transparent disabled:text-gray-500"
-            onClick={(e) => { e.stopPropagation(); playPrevious(); }}
+            onClick={(e) => { 
+              e.stopPropagation(); 
+              console.log('Previous button clicked, canSkip:', canSkip, 'playlist length:', playlist.length, 'currentTrackIndex:', currentTrackIndex);
+              playPrevious(); 
+            }}
             disabled={!canSkip}
           >
             <SkipBack className="h-3 w-3" />
@@ -138,7 +143,11 @@ const MiniPlayer = () => {
             variant="ghost" 
             size="icon" 
             className="text-white hover:bg-transparent hover:text-lira-blue h-7 w-7 disabled:opacity-50 disabled:hover:bg-transparent disabled:text-gray-500"
-            onClick={(e) => { e.stopPropagation(); playNext(); }}
+            onClick={(e) => { 
+              e.stopPropagation(); 
+              console.log('Next button clicked, canSkip:', canSkip, 'playlist length:', playlist.length, 'currentTrackIndex:', currentTrackIndex);
+              playNext(); 
+            }}
             disabled={!canSkip}
           >
             <SkipForward className="h-3 w-3" />
