@@ -17,7 +17,7 @@ const BottomNav = () => {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-lira-dark-page/90 backdrop-blur-sm shadow-lg-top z-50 border-t border-white/10">
-      <div className="container mx-auto flex justify-around items-center h-16">
+      <div className="container mx-auto flex justify-around items-center h-12">
         {navItems.map((item) => {
           const isActive = location.pathname === item.path;
           return (
@@ -25,11 +25,11 @@ const BottomNav = () => {
               key={item.label}
               onClick={() => navigate(item.path)}
               className={cn(
-                "flex flex-col items-center justify-center w-full py-2 touch-manipulation",
+                "flex flex-col items-center justify-center w-full py-1 touch-manipulation",
                 isActive ? "text-lira-blue" : "text-gray-400 hover:text-white"
               )}
             >
-              <item.icon className="h-5 w-5 mb-1" strokeWidth={isActive ? 2.5 : 2} />
+              <item.icon className="h-4 w-4 mb-1" strokeWidth={isActive ? 2.5 : 2} />
               <span className={cn("text-xs font-medium", isActive ? "font-semibold" : "")}>{item.label}</span>
             </button>
           );

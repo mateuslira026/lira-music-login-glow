@@ -1,13 +1,75 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePlayer } from '@/contexts/PlayerContext';
 import { Button } from '@/components/ui/button';
 import { Play, Pause, SkipForward, SkipBack } from 'lucide-react';
+import { FastAverageColor, FastAverageColorResult } from 'fast-average-color';
 
 const MiniPlayer = () => {
   const { currentSong, isPlaying, togglePlay, playNext, playPrevious, playlist, currentTrackIndex } = usePlayer();
   const navigate = useNavigate();
+  const [bgColor, setBgColor] = useState<string>('rgb(88, 28, 135)'); // Fallback roxo escuro
+
+  useEffect(() => {
+    if (currentSong?.albumArtUrl) {
+      const fac = new FastAverageColor();
+      let imageUrl = currentSong.albumArtUrl;
+      if (imageUrl.includes('picsum.photos')) {
+        imageUrl = `${imageUrl}?ts=${new Date().getTime()}`; // Ensure timestamp key is unique
+      }
+
+      const updateBackgroundColor = (colorResult: FastAverageColorResult | null) => {
+        if (colorResult && colorResult.hex) {
+          const r = parseInt(colorResult.hex.slice(1, 3), 16);
+          const g = parseInt(colorResult.hex.slice(3, 5), 16);
+          const b = parseInt(colorResult.hex.slice(5, 7), 16);
+          const darkR = Math.floor(r * 0.7);
+          const darkG = Math.floor(g * 0.7);
+          const darkB = Math.floor(b * 0.7);
+          setBgColor(`rgb(${darkR}, ${darkG}, ${darkB})`);
+        } else {
+          setBgColor('rgb(50, 50, 70)'); 
+        }
+      };
+
+      const attemptDirectColorExtraction = async () => {
+        try {
+          const color = await fac.getColorAsync(imageUrl, { crossOrigin: 'anonymous' });
+          updateBackgroundColor(color);
+        } catch (directError) {
+          console.warn(`Direct getColorAsync failed for ${imageUrl}: ${directError}. Attempting fetch workaround for CORS.`);
+          await attemptFetchWorkaround(imageUrl, fac, updateBackgroundColor);
+        }
+      };
+
+      const attemptFetchWorkaround = async (url: string, facInstance: FastAverageColor, callback: (colorResult: FastAverageColorResult | null) => void) => {
+        try {
+          const proxyUrl = url.includes('picsum.photos') ? `https://images.weserv.nl/?url=${encodeURIComponent(url.split('?')[0])}&t=${new Date().getTime()}` : url;
+          const response = await fetch(proxyUrl, { mode: 'cors' });
+          if (!response.ok) {
+            throw new Error(`Fetch failed for album art: ${response.status} ${response.statusText} from ${proxyUrl}`);
+          }
+          const blob = await response.blob();
+          const objectURL = URL.createObjectURL(blob);
+          try {
+            const color = await facInstance.getColorAsync(objectURL);
+            callback(color);
+          } finally {
+            URL.revokeObjectURL(objectURL); 
+          }
+        } catch (fetchError) {
+          console.error(`Fetch workaround failed for ${url}: ${fetchError}`);
+          callback(null); 
+        }
+      };
+
+      attemptDirectColorExtraction();
+
+    } else {
+      setBgColor('rgb(26, 20, 36)'); 
+    }
+  }, [currentSong?.albumArtUrl, currentSong?.id]);
 
   // Don't render if no song is current
   if (!currentSong) {
@@ -23,9 +85,14 @@ const MiniPlayer = () => {
 
   const canSkip = playlist.length > 1 && currentTrackIndex !== null;
 
+  const backgroundStyle = {
+    background: `linear-gradient(to right, ${bgColor} 0%, rgba(0,0,0,0.3) 100%)`
+  };
+
   return (
     <div 
-      className="fixed bottom-16 left-0 right-0 bg-black/20 backdrop-blur-sm p-2 shadow-lg-top z-40 border-t border-white/5 cursor-pointer"
+      className="fixed bottom-12 left-0 right-0 backdrop-blur-sm p-2 shadow-lg-top z-40 border-t border-white/5 cursor-pointer"
+      style={backgroundStyle}
       onClick={handlePlayerClick}
     >
       <div className="container mx-auto flex items-center justify-between">
