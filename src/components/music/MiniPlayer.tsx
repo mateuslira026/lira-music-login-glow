@@ -106,7 +106,7 @@ const MiniPlayer = () => {
     <div className="fixed bottom-12 left-0 right-0 z-40">
       {/* Mini Player */}
       <div 
-        className="backdrop-blur-sm p-2 shadow-lg-top border-t border-white/5 cursor-pointer"
+        className="backdrop-blur-sm p-2 shadow-lg-top border-t border-white/5 cursor-pointer rounded-t-lg mx-2"
         style={backgroundStyle}
         onClick={handlePlayerClick}
       >
@@ -174,8 +174,8 @@ const MiniPlayer = () => {
       </div>
 
       {/* Progress Bar - Na divisa entre mini-player e bottom nav */}
-      <div className="w-full px-4 bg-lira-dark-page/90 backdrop-blur-sm py-1">
-        <Progress value={33} className="h-1 bg-white/20" />
+      <div className="w-full mx-2">
+        <Progress value={33} className="h-1 bg-white/20 rounded-none" />
       </div>
     </div>
   );

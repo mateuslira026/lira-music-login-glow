@@ -1,13 +1,16 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { PlayerProvider } from "./contexts/PlayerContext";
+import { useState, useEffect } from "react";
 
 // Component Imports
 import MiniPlayer from "@/components/music/MiniPlayer";
 import BottomNav from "@/components/layout/BottomNav";
+import SplashScreen from "@/components/SplashScreen";
 
 // Page Imports
 import LoginPage from "./pages/LoginPage";
@@ -28,11 +31,20 @@ const queryClient = new QueryClient();
 
 const AppContent = () => {
   const location = useLocation();
+  const [showSplash, setShowSplash] = useState(true);
   
   // Define routes where BottomNav should appear
   const showBottomNav = ['/home', '/search', '/library', '/profile', '/player', '/album', '/category', '/liked-songs'].some(
     route => location.pathname.startsWith(route)
   );
+
+  const handleSplashComplete = () => {
+    setShowSplash(false);
+  };
+
+  if (showSplash) {
+    return <SplashScreen onComplete={handleSplashComplete} />;
+  }
 
   return (
     <div className="flex flex-col h-screen bg-black">
