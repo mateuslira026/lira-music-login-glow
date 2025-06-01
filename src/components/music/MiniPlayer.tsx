@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePlayer } from '@/contexts/PlayerContext';
@@ -11,6 +10,8 @@ const MiniPlayer = () => {
   const { currentSong, isPlaying, togglePlay, playNext, playPrevious, playlist, currentTrackIndex, toggleLike, isLiked } = usePlayer();
   const navigate = useNavigate();
   const [bgColor, setBgColor] = useState<string>('rgb(88, 28, 135)');
+
+  console.log('MiniPlayer render - currentSong:', currentSong, 'isPlaying:', isPlaying);
 
   useEffect(() => {
     if (currentSong?.albumArtUrl) {
@@ -73,8 +74,11 @@ const MiniPlayer = () => {
   }, [currentSong?.albumArtUrl, currentSong?.id]);
 
   if (!currentSong) {
+    console.log('MiniPlayer: No current song, not rendering');
     return null;
   }
+
+  console.log('MiniPlayer: Rendering with song:', currentSong.title);
 
   const handlePlayerClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).closest('button')) {
@@ -98,7 +102,7 @@ const MiniPlayer = () => {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40">
+    <div className="fixed bottom-16 left-0 right-0 z-40">
       {/* Progress Bar */}
       <div className="w-full px-4">
         <Progress value={33} className="h-1 bg-white/20" />

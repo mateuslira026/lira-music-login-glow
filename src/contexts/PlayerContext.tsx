@@ -57,6 +57,7 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   }, [likedSongs]);
 
   const setCurrentSong = useCallback((song: Song | null) => {
+    console.log('PlayerContext: setCurrentSong called with:', song);
     setCurrentSongInternal(song);
     if (song) {
       setIsPlaying(true); // Auto-play when a new song is set directly
@@ -77,12 +78,13 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   }, [playlist]);
 
   const playPlaylist = useCallback((songs: Song[], startIndex: number = 0) => {
-    console.log('playPlaylist called with:', songs.length, 'songs, startIndex:', startIndex);
+    console.log('PlayerContext: playPlaylist called with:', songs.length, 'songs, startIndex:', startIndex);
     setPlaylist(songs);
     if (songs.length > 0 && startIndex < songs.length) {
       setCurrentTrackIndex(startIndex);
       setCurrentSongInternal(songs[startIndex]);
       setIsPlaying(true);
+      console.log('PlayerContext: Set current song to:', songs[startIndex]);
     } else {
       setCurrentSongInternal(null);
       setIsPlaying(false);
