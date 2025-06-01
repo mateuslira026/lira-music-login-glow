@@ -104,11 +104,6 @@ const MiniPlayer = () => {
 
   return (
     <div className="fixed bottom-12 left-0 right-0 z-40">
-      {/* Progress Bar - No topo do mini-player */}
-      <div className="w-full px-4 bg-lira-dark-page/90 backdrop-blur-sm py-1">
-        <Progress value={33} className="h-1 bg-white/20" />
-      </div>
-
       {/* Mini Player */}
       <div 
         className="backdrop-blur-sm p-2 shadow-lg-top border-t border-white/5 cursor-pointer"
@@ -176,6 +171,11 @@ const MiniPlayer = () => {
             </Button>
           </div>
         </div>
+      </div>
+
+      {/* Progress Bar - Na divisa entre mini-player e bottom nav */}
+      <div className="w-full px-4 bg-lira-dark-page/90 backdrop-blur-sm py-1">
+        <Progress value={33} className="h-1 bg-white/20" />
       </div>
     </div>
   );
