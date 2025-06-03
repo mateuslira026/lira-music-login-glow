@@ -2,20 +2,23 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import AlbumCarousel from './AlbumCarousel';
+import ArtistCarousel from './ArtistCarousel';
 import { Album } from './AlbumCard';
+import { Artist } from './ArtistCard';
 
 interface MusicSectionProps {
   title: string;
-  albums: Album[]; // Certifique-se que Album pode ser AlbumWithSongs se necessário
+  albums?: Album[];
+  artists?: Artist[];
 }
 
-const MusicSection: React.FC<MusicSectionProps> = ({ title, albums }) => {
+const MusicSection: React.FC<MusicSectionProps> = ({ title, albums, artists }) => {
   const navigate = useNavigate();
 
   const handleSeeMore = () => {
-    // Codificar o título para usar como parte da URL de forma segura
     const encodedTitle = encodeURIComponent(title);
-    navigate(`/category/${encodedTitle}`, { state: { albums, categoryTitle: title } });
+    const dataToPass = albums || artists;
+    navigate(`/category/${encodedTitle}`, { state: { albums: dataToPass, categoryTitle: title } });
   };
 
   return (
@@ -29,7 +32,7 @@ const MusicSection: React.FC<MusicSectionProps> = ({ title, albums }) => {
           Ver mais
         </button>
       </div>
-      <AlbumCarousel albums={albums} />
+      {artists ? <ArtistCarousel artists={artists} /> : <AlbumCarousel albums={albums || []} />}
     </section>
   );
 };

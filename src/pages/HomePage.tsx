@@ -3,6 +3,7 @@ import AppHeader from '@/components/layout/AppHeader';
 import MusicSection from '@/components/music/MusicSection';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Album } from '@/components/music/AlbumCard'; 
+import { Artist } from '@/components/music/ArtistCard';
 import { usePlayer, Song as PlayerSong } from '@/contexts/PlayerContext';
 
 export interface AlbumWithSongs extends Album {
@@ -50,16 +51,15 @@ const recentesAlbums = [...placeholderAlbums].sort(() => 0.5 - Math.random()).sl
 const paraVoceAlbums = [...placeholderAlbums].sort(() => Math.random() - 0.5).slice(0, 6);
 const novosLancamentosAlbums = [...placeholderAlbums].sort(() => Math.random() - 0.5).slice(0, 5);
 
-const seusArtistasFavoritosData: AlbumWithSongs[] = Array.from({ length: 5 }, (_, i) => {
+const seusArtistasFavoritos: Artist[] = Array.from({ length: 5 }, (_, i) => {
   const artistId = `fav-artist-${i + 1}`;
   const artistName = `Artista Favorito ${i + 1}`;
-  const coverUrl = `https://picsum.photos/seed/${artistId}/200/200`;
+  const profileImageUrl = `https://picsum.photos/seed/artist-${artistId}/400/400`;
   return {
     id: artistId,
-    title: artistName,
-    artist: "Destaque",
-    coverUrl: coverUrl,
-    songs: createPlaceholderSongs(artistId, artistName, coverUrl, artistName, 1 + (i % 3)),
+    name: artistName,
+    profileImageUrl: profileImageUrl,
+    songs: createPlaceholderSongs(artistId, artistName, profileImageUrl, artistName, 1 + (i % 3)),
   };
 });
 
@@ -94,7 +94,6 @@ const placeholderPodcasts: AlbumWithSongs[] = Array.from({ length: 7 }, (_, i) =
 export const getAlbumById = (id: string): AlbumWithSongs | undefined => {
   const allAlbums = [
     ...placeholderAlbums,
-    ...seusArtistasFavoritosData,
     ...flashbackData,
     ...placeholderPodcasts,
   ];
@@ -112,7 +111,7 @@ const HomePage = () => {
         <div className="pt-2 pb-32">
           <div className="space-y-6 mt-4">
             <MusicSection title="Mixes Mais Ouvidos" albums={mixesMaisOuvidos} />
-            <MusicSection title="Seus artistas favoritos" albums={seusArtistasFavoritosData} />
+            <MusicSection title="Seus artistas favoritos" artists={seusArtistasFavoritos} />
             <MusicSection title="Podcasts" albums={placeholderPodcasts} />
             
             {currentSong && (
