@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePlayer } from '@/contexts/PlayerContext';
@@ -11,8 +10,30 @@ const MiniPlayer = () => {
   const { currentSong, isPlaying, togglePlay, playNext, playPrevious, playlist, currentTrackIndex, toggleLike, isLiked } = usePlayer();
   const navigate = useNavigate();
   const [bgColor, setBgColor] = useState<string>('rgb(88, 28, 135)');
+  const [progress, setProgress] = useState(0);
 
   console.log('MiniPlayer render - currentSong:', currentSong, 'isPlaying:', isPlaying);
+
+  // Simular progresso da música
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isPlaying) {
+      interval = setInterval(() => {
+        setProgress((prev) => {
+          const next = prev + 1;
+          return next >= 100 ? 0 : next;
+        });
+      }, 300); // Atualiza a cada 300ms para movimento suave
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isPlaying]);
+
+  // Reset progress when song changes
+  useEffect(() => {
+    setProgress(0);
+  }, [currentSong?.id]);
 
   useEffect(() => {
     if (currentSong?.albumArtUrl) {
@@ -115,10 +136,10 @@ const MiniPlayer = () => {
             <img 
               src={currentSong.albumArtUrl} 
               alt="Capa do Álbum" 
-              className={`w-8 h-8 rounded-md ${isPlaying ? 'animate-pulse' : ''}`}
+              className="w-8 h-8 rounded-md"
             />
             <div className="min-w-0">
-              <p className={`text-xs font-semibold text-white truncate ${isPlaying ? 'animate-pulse' : ''}`}>{currentSong.title}</p>
+              <p className="text-xs font-semibold text-white truncate">{currentSong.title}</p>
               <p className="text-xs text-gray-400 truncate">{currentSong.artist}</p>
             </div>
           </div>
@@ -142,7 +163,7 @@ const MiniPlayer = () => {
               variant="ghost" 
               size="icon" 
               onClick={(e) => { e.stopPropagation(); togglePlay(); }} 
-              className={`text-white hover:bg-transparent hover:text-lira-blue h-8 w-8 rounded-full ${isPlaying ? 'animate-pulse' : ''}`}
+              className="text-white hover:bg-transparent hover:text-lira-blue h-8 w-8 rounded-full"
             >
               {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
             </Button>
@@ -175,7 +196,10 @@ const MiniPlayer = () => {
 
       {/* Progress Bar - Na divisa entre mini-player e bottom nav */}
       <div className="w-full mx-2">
-        <Progress value={33} className="h-1 bg-white/20 rounded-none" />
+        <Progress 
+          value={progress} 
+          className={`h-1 bg-white/20 rounded-none ${isPlaying ? 'transition-all duration-300' : ''}`} 
+        />
       </div>
     </div>
   );
