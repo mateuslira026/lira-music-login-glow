@@ -31,7 +31,14 @@ const queryClient = new QueryClient();
 
 const AppContent = () => {
   const location = useLocation();
-  const [showSplash, setShowSplash] = useState(true);
+  const [showSplash, setShowSplash] = useState(false);
+  
+  // Mostrar splash apenas na rota "/"
+  useEffect(() => {
+    if (location.pathname === '/') {
+      setShowSplash(true);
+    }
+  }, [location.pathname]);
   
   // Define routes where BottomNav should appear
   const showBottomNav = ['/home', '/search', '/library', '/profile', '/player', '/album', '/category', '/liked-songs'].some(
@@ -42,7 +49,7 @@ const AppContent = () => {
     setShowSplash(false);
   };
 
-  if (showSplash) {
+  if (showSplash && location.pathname === '/') {
     return <SplashScreen onComplete={handleSplashComplete} />;
   }
 

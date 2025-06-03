@@ -106,7 +106,7 @@ const MiniPlayer = () => {
     <div className="fixed bottom-12 left-0 right-0 z-40">
       {/* Mini Player */}
       <div 
-        className="backdrop-blur-sm p-2 shadow-lg-top border-t border-white/5 cursor-pointer rounded-t-lg mx-2"
+        className="backdrop-blur-sm p-2 shadow-lg-top border-t border-white/5 cursor-pointer rounded-lg mx-2"
         style={backgroundStyle}
         onClick={handlePlayerClick}
       >

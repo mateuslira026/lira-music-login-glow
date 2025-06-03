@@ -15,8 +15,8 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
   }, [onComplete]);
 
   return (
-    <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
-      <div className="flex flex-col items-center justify-center">
+    <div className="fixed inset-0 w-full h-full bg-black flex items-center justify-center z-50">
+      <div className="flex flex-col items-center justify-center w-full h-full">
         <img 
           src="/lovable-uploads/7439f52f-034e-4da5-bb4a-51903f87c328.png" 
           alt="Lira Music" 
