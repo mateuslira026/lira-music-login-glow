@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { Music2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom'; 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -21,7 +20,11 @@ const AppHeader = () => {
     <header className="bg-lira-dark-card p-3 shadow-md sticky top-0 z-50">
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center">
-          <Music2 className="h-7 w-7 text-lira-blue mr-2" />
+          <img 
+            src="/lovable-uploads/7439f52f-034e-4da5-bb4a-51903f87c328.png" 
+            alt="Lira Music Logo" 
+            className="h-7 w-7 mr-2 object-contain"
+          />
           <h1 className="text-xl font-semibold text-white truncate" title={`${getGreeting()}, ${userName}!`}>
             {`${getGreeting()}, ${userName}!`}
           </h1>

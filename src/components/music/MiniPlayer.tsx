@@ -115,10 +115,10 @@ const MiniPlayer = () => {
             <img 
               src={currentSong.albumArtUrl} 
               alt="Capa do Álbum" 
-              className="w-8 h-8 rounded-md"
+              className={`w-8 h-8 rounded-md ${isPlaying ? 'animate-pulse' : ''}`}
             />
             <div className="min-w-0">
-              <p className="text-xs font-semibold text-white truncate">{currentSong.title}</p>
+              <p className={`text-xs font-semibold text-white truncate ${isPlaying ? 'animate-pulse' : ''}`}>{currentSong.title}</p>
               <p className="text-xs text-gray-400 truncate">{currentSong.artist}</p>
             </div>
           </div>
@@ -142,7 +142,7 @@ const MiniPlayer = () => {
               variant="ghost" 
               size="icon" 
               onClick={(e) => { e.stopPropagation(); togglePlay(); }} 
-              className="text-white hover:bg-transparent hover:text-lira-blue h-8 w-8 rounded-full"
+              className={`text-white hover:bg-transparent hover:text-lira-blue h-8 w-8 rounded-full ${isPlaying ? 'animate-pulse' : ''}`}
             >
               {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
             </Button>
@@ -164,7 +164,7 @@ const MiniPlayer = () => {
             <Button 
               variant="ghost" 
               size="icon" 
-              className={`h-7 w-7 hover:bg-transparent ${songIsLiked ? 'text-red-500 hover:text-red-400' : 'text-white hover:text-red-500'}`}
+              className={`h-7 w-7 hover:bg-transparent ${songIsLiked ? 'text-white hover:text-gray-300' : 'text-white hover:text-red-500'}`}
               onClick={handleLikeClick}
             >
               <Heart className={`h-3 w-3 ${songIsLiked ? 'fill-current' : ''}`} />
