@@ -23,8 +23,11 @@ const AppHeader = () => {
           <img 
             src="/lovable-uploads/7439f52f-034e-4da5-bb4a-51903f87c328.png" 
             alt="Lira Music Logo" 
-            className="h-6 w-6 mr-3 object-contain rounded-md bg-transparent"
-            style={{ filter: 'brightness(1.1) contrast(1.1)' }}
+            className="h-8 w-8 mr-3 object-contain"
+            style={{ 
+              filter: 'brightness(1.2) contrast(1.2)',
+              mixBlendMode: 'screen'
+            }}
           />
           <h1 className="text-xl font-semibold text-white truncate" title={`${getGreeting()}, ${userName}!`}>
             {`${getGreeting()}, ${userName}!`}
