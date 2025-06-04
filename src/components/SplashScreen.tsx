@@ -19,7 +19,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
       <div className="flex flex-col items-center justify-center w-full h-full space-y-8">
         <div className="relative">
           <img 
-            src="/lovable-uploads/9e92afb9-f8fa-4d01-bf68-f63ded4ee8cd.png" 
+            src="/lovable-uploads/ba367f49-9e5a-462e-918a-12285af2db03.png" 
             alt="Lira Music" 
             className="w-32 h-32 object-contain animate-pulse"
           />

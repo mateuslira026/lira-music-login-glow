@@ -19,13 +19,13 @@ const AppHeader = () => {
   return (
     <header className="bg-lira-dark-card p-3 shadow-md sticky top-0 z-50">
       <div className="container mx-auto flex items-center justify-between">
-        <div className="flex items-center">
+        <div className="flex items-center justify-start">
           <img 
             src="/lovable-uploads/9e92afb9-f8fa-4d01-bf68-f63ded4ee8cd.png" 
             alt="Lira Music Logo" 
-            className="h-12 w-12 mr-3 object-contain"
+            className="h-10 w-10 mr-3 object-contain"
           />
-          <h1 className="text-xl font-semibold text-white truncate" title={`${getGreeting()}, ${userName}!`}>
+          <h1 className="text-lg font-semibold text-white truncate" title={`${getGreeting()}, ${userName}!`}>
             {`${getGreeting()}, ${userName}!`}
           </h1>
         </div>

@@ -110,7 +110,7 @@ const HomePage = () => {
       <ScrollArea className="flex-1 overflow-y-auto">
         <div className="pt-2 pb-32">
           <div className="space-y-6 mt-4">
-            <MusicSection title="Mixes Mais Ouvidos" albums={mixesMaisOuvidos} />
+            <MusicSection title="Seus mixes mais ouvidos" albums={mixesMaisOuvidos} />
             <MusicSection title="Seus artistas favoritos" artists={seusArtistasFavoritos} />
             <MusicSection title="Podcasts" albums={placeholderPodcasts} />
             
@@ -119,8 +119,8 @@ const HomePage = () => {
             )}
             
             <MusicSection title="Flashback" albums={flashbackData} />
-            <MusicSection title="Novos Lançamentos" albums={novosLancamentosAlbums} />
-            <MusicSection title="Para Você" albums={paraVoceAlbums} />
+            <MusicSection title="Novos lançamentos" albums={novosLancamentosAlbums} />
+            <MusicSection title="Para você" albums={paraVoceAlbums} />
           </div>
         </div>
       </ScrollArea>
