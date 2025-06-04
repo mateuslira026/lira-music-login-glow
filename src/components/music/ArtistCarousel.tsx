@@ -29,7 +29,7 @@ const ArtistCarousel: React.FC<ArtistCarouselProps> = ({ artists }) => {
     >
       <CarouselContent className="-ml-2 md:-ml-4">
         {artists.map((artist) => (
-          <CarouselItem key={artist.id} className="pl-2 md:pl-4 basis-[140px] md:basis-[180px]">
+          <CarouselItem key={artist.id} className="pl-2 md:pl-4 basis-[100px] md:basis-[120px]">
             <ArtistCard artist={artist} />
           </CarouselItem>
         ))}
