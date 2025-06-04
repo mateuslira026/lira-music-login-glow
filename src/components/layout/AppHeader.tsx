@@ -21,13 +21,9 @@ const AppHeader = () => {
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center">
           <img 
-            src="/lovable-uploads/7439f52f-034e-4da5-bb4a-51903f87c328.png" 
+            src="/lovable-uploads/b379a479-9722-4757-bfba-fafea93dd456.png" 
             alt="Lira Music Logo" 
-            className="h-12 w-12 mr-3 object-contain"
-            style={{ 
-              filter: 'brightness(1.2) contrast(1.2)',
-              mixBlendMode: 'screen'
-            }}
+            className="h-20 w-20 mr-3 object-contain"
           />
           <h1 className="text-xl font-semibold text-white truncate" title={`${getGreeting()}, ${userName}!`}>
             {`${getGreeting()}, ${userName}!`}
