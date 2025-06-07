@@ -31,12 +31,14 @@ const queryClient = new QueryClient();
 
 const AppContent = () => {
   const location = useLocation();
-  const [showSplash, setShowSplash] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
   
-  // Mostrar splash apenas na rota "/"
+  // Mostrar splash imediatamente ao carregar
   useEffect(() => {
     if (location.pathname === '/') {
       setShowSplash(true);
+    } else {
+      setShowSplash(false);
     }
   }, [location.pathname]);
   
