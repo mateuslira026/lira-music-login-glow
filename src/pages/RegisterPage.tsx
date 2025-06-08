@@ -52,7 +52,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-lira-dark-page flex flex-col items-center justify-center p-4 selection:bg-lira-blue/30 selection:text-white font-inter">
+    <div className="min-h-screen w-full bg-lira-dark-page flex flex-col items-center justify-center p-4 selection:bg-lira-blue/30 selection:text-white font-inter relative">
       <div className="relative w-full max-w-md bg-lira-dark-card p-8 rounded-xl shadow-2xl space-y-6 animate-fade-in">
         <div className="text-center">
           <Music2 className="mx-auto h-16 w-16 text-lira-blue mb-3" />
@@ -166,7 +166,8 @@ const RegisterPage = () => {
           </Link>
         </p>
       </div>
-      <footer className="text-center text-xs text-gray-600 mt-8">
+      
+      <footer className="absolute bottom-8 text-center text-xs text-gray-600">
         © {new Date().getFullYear()} Lira Music. Todos os direitos reservados.
       </footer>
     </div>
@@ -174,4 +175,3 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
-

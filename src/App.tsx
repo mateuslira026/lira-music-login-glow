@@ -24,6 +24,7 @@ import PlayerPage from "./pages/PlayerPage";
 import AlbumDetailPage from "./pages/AlbumDetailPage";
 import CategoryDetailPage from "./pages/CategoryDetailPage";
 import LikedSongsPage from "./pages/LikedSongsPage";
+import ArtistProfilePage from "./pages/ArtistProfilePage";
 import NotFound from "./pages/NotFound";
 import "./App.css";
 
@@ -43,7 +44,7 @@ const AppContent = () => {
   }, [location.pathname]);
   
   // Define routes where BottomNav should appear
-  const showBottomNav = ['/home', '/search', '/library', '/profile', '/player', '/album', '/category', '/liked-songs'].some(
+  const showBottomNav = ['/home', '/search', '/library', '/profile', '/player', '/album', '/category', '/liked-songs', '/artist'].some(
     route => location.pathname.startsWith(route)
   );
 
@@ -71,6 +72,7 @@ const AppContent = () => {
           <Route path="/album/:albumId" element={<AlbumDetailPage />} />
           <Route path="/category/:categoryTitle" element={<CategoryDetailPage />} /> 
           <Route path="/liked-songs" element={<LikedSongsPage />} />
+          <Route path="/artist/:artistId" element={<ArtistProfilePage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

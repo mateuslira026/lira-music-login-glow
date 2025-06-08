@@ -3,12 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Mail, Lock, Music2, Chrome, Eye, EyeOff } from 'lucide-react'; // Usando Chrome como ícone do Google, Eye e EyeOff para senha
+import { Mail, Lock, Music2, Chrome, Eye, EyeOff } from 'lucide-react';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false); // Estado para visibilidade da senha
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = (e: React.FormEvent) => {
@@ -37,23 +37,19 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-lira-dark-page flex flex-col items-center justify-center p-4 selection:bg-lira-blue/30 selection:text-white">
-      {/* Você pode adicionar uma imagem de fundo aqui no futuro:
-      <img src="/path-to-your-music-background.jpg" alt="Background" className="absolute inset-0 w-full h-full object-cover blur-sm opacity-30" /> 
-      */}
+    <div className="min-h-screen w-full bg-lira-dark-page flex flex-col items-center justify-center p-4 selection:bg-lira-blue/30 selection:text-white relative">
       <div className="relative w-full max-w-md bg-lira-dark-card p-8 rounded-xl shadow-2xl space-y-6 animate-fade-in">
         <div className="text-center">
           <Music2 className="mx-auto h-16 w-16 text-lira-blue mb-3" />
           <p className="text-lira-blue font-medium">Bem-vindo à Lira Music</p>
-          {/* Ajuste no tamanho do texto para responsividade */}
           <h1 className="text-2xl sm:text-3xl font-bold text-white mt-1">Entre na sua conta</h1>
         </div>
 
-        <form onSubmit={handleLogin} className="space-y-4"> {/* Diminuído o space-y aqui também */}
-          <div className="space-y-1.5"> {/* Diminuído o space-y */}
-            <Label htmlFor="email" className="text-gray-300 text-sm">Email</Label> {/* Texto do label menor */}
+        <form onSubmit={handleLogin} className="space-y-4">
+          <div className="space-y-1.5">
+            <Label htmlFor="email" className="text-gray-300 text-sm">Email</Label>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" /> {/* Ícone menor */}
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
               <Input
                 id="email"
                 type="email"
@@ -61,23 +57,22 @@ const LoginPage = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="pl-9 bg-gray-800 border-gray-700 text-white focus:ring-lira-blue focus:border-lira-blue rounded-md placeholder:text-gray-500 h-9 py-1.5 text-sm" /* Tamanho reduzido e padding esquerdo ajustado */
+                className="pl-9 bg-gray-800 border-gray-700 text-white focus:ring-lira-blue focus:border-lira-blue rounded-md placeholder:text-gray-500 h-9 py-1.5 text-sm"
               />
             </div>
           </div>
 
-          <div className="space-y-1.5"> {/* Diminuído o space-y */}
-            <Label htmlFor="password" className="text-gray-300 text-sm">Senha</Label> {/* Texto do label menor */}
+          <div className="space-y-1.5">
+            <Label htmlFor="password" className="text-gray-300 text-sm">Senha</Label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" /> {/* Ícone menor */}
+              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
               <Input
                 id="password"
-                type={showPassword ? "text" : "password"} // Altera o tipo do input
+                type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                // Aumentar padding à direita para o ícone não sobrepor o texto
                 className="px-9 bg-gray-800 border-gray-700 text-white focus:ring-lira-blue focus:border-lira-blue rounded-md placeholder:text-gray-500 h-9 py-1.5 text-sm"
               />
               <button
@@ -90,13 +85,13 @@ const LoginPage = () => {
               </button>
             </div>
             <div className="text-right">
-              <Link to="/forgot-password" className="text-sm text-lira-blue hover:underline">Esqueceu a senha?</Link> {/* Link funcional */}
+              <Link to="/forgot-password" className="text-sm text-lira-blue hover:underline">Esqueceu a senha?</Link>
             </div>
           </div>
 
           <Button 
             type="submit" 
-            className="w-full bg-lira-blue text-lira-blue-foreground hover:bg-opacity-85 active:scale-[0.98] transition-all duration-150 py-2 text-sm font-semibold rounded-md" /* Tamanho reduzido */
+            className="w-full bg-lira-blue text-lira-blue-foreground hover:bg-opacity-85 active:scale-[0.98] transition-all duration-150 py-2 text-sm font-semibold rounded-md"
           >
             Entrar e Curtir a Música
           </Button>
@@ -114,9 +109,9 @@ const LoginPage = () => {
         <Button
           variant="outline"
           onClick={handleGoogleLogin}
-          className="w-full bg-white text-gray-700 hover:bg-gray-100 border-gray-300 active:scale-[0.98] transition-all duration-150 py-2 text-sm font-semibold rounded-md shadow-sm hover:shadow-md flex items-center justify-center" /* Tamanho reduzido e flex para alinhar ícone e texto */
+          className="w-full bg-white text-gray-700 hover:bg-gray-100 border-gray-300 active:scale-[0.98] transition-all duration-150 py-2 text-sm font-semibold rounded-md shadow-sm hover:shadow-md flex items-center justify-center"
         >
-          <Chrome className="h-4 w-4 mr-2" /> {/* Ícone do Google (Chrome como substituto) e tamanho ajustado */}
+          <Chrome className="h-4 w-4 mr-2" />
           <span>Entrar com o Google</span>
         </Button>
 
@@ -127,7 +122,7 @@ const LoginPage = () => {
           </Link>
         </p>
       </div>
-      <footer className="text-center text-xs text-gray-600 mt-8">
+      <footer className="absolute bottom-8 text-center text-xs text-gray-600">
         © {new Date().getFullYear()} Lira Music. Todos os direitos reservados.
       </footer>
     </div>

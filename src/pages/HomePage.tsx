@@ -1,3 +1,4 @@
+
 import React from 'react';
 import AppHeader from '@/components/layout/AppHeader';
 import MusicSection from '@/components/music/MusicSection';
@@ -51,9 +52,11 @@ const recentesAlbums = [...placeholderAlbums].sort(() => 0.5 - Math.random()).sl
 const paraVoceAlbums = [...placeholderAlbums].sort(() => Math.random() - 0.5).slice(0, 6);
 const novosLancamentosAlbums = [...placeholderAlbums].sort(() => Math.random() - 0.5).slice(0, 5);
 
+const artistNames = ['Adele', 'Ed Sheeran', 'Taylor Swift', 'Drake', 'Billie Eilish'];
+
 const seusArtistasFavoritos: Artist[] = Array.from({ length: 5 }, (_, i) => {
   const artistId = `fav-artist-${i + 1}`;
-  const artistName = `Artista Favorito ${i + 1}`;
+  const artistName = artistNames[i];
   const profileImageUrl = `https://picsum.photos/seed/artist-${artistId}/400/400`;
   return {
     id: artistId,

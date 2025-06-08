@@ -19,7 +19,7 @@ const ArtistCard: React.FC<ArtistCardProps> = ({ artist }) => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    navigate(`/album/${artist.id}`);
+    navigate(`/artist/${artist.id}`, { state: { artist } });
   };
 
   return (
