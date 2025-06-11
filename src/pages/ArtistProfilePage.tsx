@@ -15,7 +15,7 @@ const ArtistProfilePage = () => {
 
   if (!artist) {
     return (
-      <div className="min-h-screen bg-lira-dark-page flex items-center justify-center">
+      <div className="min-h-screen bg-lira-dark-page flex items-center justify-center pt-16">
         <p className="text-white">Artista não encontrado</p>
       </div>
     );
@@ -28,7 +28,7 @@ const ArtistProfilePage = () => {
   const popularSongs = artist.songs || [];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-600 to-black text-white">
+    <div className="min-h-screen bg-gradient-to-b from-gray-600 to-black text-white pt-16">
       <div className="relative">
         {/* Header com botão de voltar */}
         <div className="absolute top-4 left-4 z-10">
@@ -70,7 +70,7 @@ const ArtistProfilePage = () => {
             
             {/* Botões de ação */}
             <div className="flex items-center space-x-4">
-              <Button variant="outline" size="sm" className="text-white border-white hover:bg-white hover:text-black">
+              <Button variant="outline" size="sm" className="text-white border-gray-300 hover:bg-gray-600 hover:text-white bg-transparent">
                 Seguir
               </Button>
               <Button variant="ghost" size="icon" className="text-white">
@@ -80,7 +80,7 @@ const ArtistProfilePage = () => {
                 <Shuffle className="h-5 w-5" />
               </Button>
               <Button
-                className="w-12 h-12 rounded-full bg-green-500 hover:bg-green-600"
+                className="w-12 h-12 rounded-full bg-lira-blue hover:bg-lira-blue/80"
                 onClick={() => popularSongs.length > 0 && handlePlaySong(popularSongs[0])}
               >
                 <Play className="h-6 w-6 fill-white" />
@@ -162,7 +162,7 @@ const ArtistProfilePage = () => {
                 
                 {/* Botão Mostrar mais */}
                 <div className="flex justify-center mt-6">
-                  <Button variant="outline" className="text-white border-gray-600 hover:bg-white/10">
+                  <Button variant="outline" className="text-white border-gray-300 hover:bg-gray-600 hover:text-white bg-transparent">
                     Mostrar mais
                   </Button>
                 </div>
@@ -223,7 +223,7 @@ const ArtistProfilePage = () => {
                 
                 {/* Botão Ver discografia */}
                 <div className="flex justify-center mt-6">
-                  <Button variant="outline" className="text-white border-gray-600 hover:bg-white/10">
+                  <Button variant="outline" className="text-white border-gray-300 hover:bg-gray-600 hover:text-white bg-transparent">
                     Ver discografia
                   </Button>
                 </div>
