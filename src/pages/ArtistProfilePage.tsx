@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Play, Shuffle, Heart, MoreHorizontal } from 'lucide-react';
+import { ArrowLeft, Play, Pause, Shuffle, Heart, MoreHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { usePlayer } from '@/contexts/PlayerContext';
@@ -10,7 +10,7 @@ import { Artist } from '@/components/music/ArtistCard';
 const ArtistProfilePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { setCurrentSong, currentSong, isPlaying } = usePlayer();
+  const { setCurrentSong, currentSong, isPlaying, togglePlay } = usePlayer();
   const artist = location.state?.artist as Artist;
 
   if (!artist) {
@@ -25,10 +25,24 @@ const ArtistProfilePage = () => {
     setCurrentSong(song);
   };
 
+  const handleMainPlayButton = () => {
+    const popularSongs = artist.songs || [];
+    if (popularSongs.length > 0) {
+      // Se não há música tocando ou a música atual não é do artista, toca a primeira
+      if (!currentSong || !popularSongs.find(song => song.id === currentSong.id)) {
+        handlePlaySong(popularSongs[0]);
+      } else {
+        // Se já está tocando música do artista, apenas pausa/despausa
+        togglePlay();
+      }
+    }
+  };
+
   const popularSongs = artist.songs || [];
+  const isCurrentArtistPlaying = currentSong && popularSongs.find(song => song.id === currentSong.id) && isPlaying;
 
   return (
-    <div className="min-h-screen bg-lira-dark-page text-white pt-16">
+    <div className="min-h-screen bg-lira-dark-page text-white">
       <div className="relative">
         {/* Header com botão de voltar */}
         <div className="absolute top-4 left-4 z-10">
@@ -43,7 +57,7 @@ const ArtistProfilePage = () => {
         </div>
 
         {/* Seção do perfil do artista */}
-        <div className="relative h-96 bg-lira-dark-page">
+        <div className="relative h-80 bg-lira-dark-page">
           <div className="absolute inset-0">
             <img
               src={artist.profileImageUrl}
@@ -70,7 +84,7 @@ const ArtistProfilePage = () => {
             
             {/* Botões de ação */}
             <div className="flex items-center space-x-4">
-              <Button variant="outline" size="sm" className="text-white border-gray-300 hover:bg-gray-600 hover:text-white bg-transparent">
+              <Button variant="outline" size="sm" className="text-gray-300 border-gray-600 hover:bg-gray-700 hover:text-white bg-transparent">
                 Seguir
               </Button>
               <Button variant="ghost" size="icon" className="text-white">
@@ -81,9 +95,13 @@ const ArtistProfilePage = () => {
               </Button>
               <Button
                 className="w-12 h-12 rounded-full bg-lira-blue hover:bg-lira-blue/80"
-                onClick={() => popularSongs.length > 0 && handlePlaySong(popularSongs[0])}
+                onClick={handleMainPlayButton}
               >
-                <Play className="h-6 w-6 fill-white" />
+                {isCurrentArtistPlaying ? (
+                  <Pause className="h-6 w-6 fill-white" />
+                ) : (
+                  <Play className="h-6 w-6 fill-white" />
+                )}
               </Button>
             </div>
           </div>
@@ -162,7 +180,7 @@ const ArtistProfilePage = () => {
                 
                 {/* Botão Mostrar mais */}
                 <div className="flex justify-center mt-6">
-                  <Button variant="outline" className="text-white border-gray-300 hover:bg-gray-600 hover:text-white bg-transparent">
+                  <Button variant="outline" className="text-gray-300 border-gray-600 hover:bg-gray-700 hover:text-white bg-transparent">
                     Mostrar mais
                   </Button>
                 </div>
@@ -223,7 +241,7 @@ const ArtistProfilePage = () => {
                 
                 {/* Botão Ver discografia */}
                 <div className="flex justify-center mt-6">
-                  <Button variant="outline" className="text-white border-gray-300 hover:bg-gray-600 hover:text-white bg-transparent">
+                  <Button variant="outline" className="text-gray-300 border-gray-600 hover:bg-gray-700 hover:text-white bg-transparent">
                     Ver discografia
                   </Button>
                 </div>
