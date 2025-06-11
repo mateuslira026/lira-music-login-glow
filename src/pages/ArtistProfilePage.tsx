@@ -28,7 +28,7 @@ const ArtistProfilePage = () => {
   const popularSongs = artist.songs || [];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-600 to-black text-white pt-16">
+    <div className="min-h-screen bg-lira-dark-page text-white pt-16">
       <div className="relative">
         {/* Header com botão de voltar */}
         <div className="absolute top-4 left-4 z-10">
@@ -43,14 +43,14 @@ const ArtistProfilePage = () => {
         </div>
 
         {/* Seção do perfil do artista */}
-        <div className="relative h-96 bg-gradient-to-b from-gray-600 to-gray-800">
+        <div className="relative h-96 bg-lira-dark-page">
           <div className="absolute inset-0">
             <img
               src={artist.profileImageUrl}
               alt={artist.name}
               className="w-full h-full object-cover opacity-30"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/80" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-lira-dark-page" />
           </div>
           
           <div className="relative flex flex-col justify-end h-full p-6">
