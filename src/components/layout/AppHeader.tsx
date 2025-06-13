@@ -9,13 +9,7 @@ const AppHeader = () => {
 
   return (
     <header className="bg-lira-dark-card p-3 shadow-md fixed top-0 left-0 right-0 z-50">
-      <div className="container mx-auto flex items-center justify-between">
-        <div className="flex items-center">
-          <h1 className="text-lg font-bold text-white">
-            Lira Music
-          </h1>
-        </div>
-        
+      <div className="container mx-auto flex items-center justify-end">
         <div 
           onClick={() => navigate('/profile')} 
           className="cursor-pointer p-1 rounded-full hover:bg-lira-dark-page/50 transition-colors"
