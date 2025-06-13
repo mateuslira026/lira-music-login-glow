@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -6,27 +5,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 const AppHeader = () => {
   const navigate = useNavigate();
 
-  const getGreeting = () => {
-    const hour = new Date().getHours();
-    if (hour < 5) return "Boa madrugada";
-    if (hour < 12) return "Bom dia";
-    if (hour < 18) return "Boa tarde";
-    return "Boa noite";
-  };
-
   const userName = "Usuário"; 
 
   return (
     <header className="bg-lira-dark-card p-3 shadow-md fixed top-0 left-0 right-0 z-50">
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center">
-          <img 
-            src="/lovable-uploads/9e92afb9-f8fa-4d01-bf68-f63ded4ee8cd.png" 
-            alt="Lira Music Logo" 
-            className="h-6 w-6 mr-2 object-contain"
-          />
-          <h1 className="text-sm font-medium text-white">
-            {`${getGreeting()}, ${userName}!`}
+          <h1 className="text-lg font-bold text-white">
+            Lira Music
           </h1>
         </div>
         
