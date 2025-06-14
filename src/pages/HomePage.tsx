@@ -21,6 +21,9 @@ export { getAlbumById, type AlbumWithSongs };
 const HomePage = () => {
   const { currentSong } = usePlayer();
 
+  console.log('HomePage - recentesAlbums:', recentesAlbums);
+  console.log('HomePage - seusArtistasFavoritos:', seusArtistasFavoritos);
+
   return (
     <div className="flex flex-col h-screen bg-black text-white">
       <AppHeader />
