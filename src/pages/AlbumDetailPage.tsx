@@ -5,7 +5,6 @@ import { getAlbumById } from './HomePage';
 import { usePlayer, Song } from '@/contexts/PlayerContext';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, PlayCircle, Music } from 'lucide-react';
-import { ScrollArea } from '@/components/ui/scroll-area';
 
 const AlbumDetailPage = () => {
   const { albumId } = useParams<{ albumId: string }>();
@@ -38,7 +37,7 @@ const AlbumDetailPage = () => {
   const isSongCurrentPaused = (song: Song) => currentSong?.id === song.id && !isPlaying;
 
   return (
-    <div className="flex flex-col min-h-screen h-full bg-gradient-to-b from-gray-800 via-lira-dark-page to-black text-white">
+    <div className="flex flex-col h-screen bg-gradient-to-b from-gray-800 via-lira-dark-page to-black text-white">
       <header className="p-4 flex items-center sticky top-0 bg-lira-dark-page/80 backdrop-blur-md z-10">
         <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="mr-2">
           <ChevronLeft className="h-6 w-6" />
@@ -46,7 +45,7 @@ const AlbumDetailPage = () => {
         <h1 className="text-xl font-semibold truncate">{album.title}</h1>
       </header>
 
-      <ScrollArea className="flex-1">
+      <div className="flex-1 overflow-y-auto hide-scrollbar">
         <div className="p-4 md:p-6 pb-32">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-6 mb-8">
             <img 
@@ -99,7 +98,7 @@ const AlbumDetailPage = () => {
             ))}
           </ul>
         </div>
-      </ScrollArea>
+      </div>
     </div>
   );
 };
