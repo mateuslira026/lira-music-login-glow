@@ -137,12 +137,12 @@ const HomePage = () => {
           <div className="space-y-6 mt-4">
             <MusicSection title="Seus mixes mais ouvidos" albums={mixesMaisOuvidos} />
             <MusicSection title="Seus artistas favoritos" artists={seusArtistasFavoritos} />
-            <MusicSection title="Podcasts" albums={placeholderPodcasts} />
             
             {currentSong && (
               <MusicSection title="Recentes" albums={recentesAlbums} />
             )}
             
+            <MusicSection title="Podcasts" albums={placeholderPodcasts} />
             <MusicSection title="Flashback" albums={flashbackData} />
             <MusicSection title="Novos lançamentos" albums={novosLancamentosAlbums} />
             <MusicSection title="Para você" albums={paraVoceAlbums} />
