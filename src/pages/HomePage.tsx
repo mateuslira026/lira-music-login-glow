@@ -1,4 +1,3 @@
-
 import React from 'react';
 import AppHeader from '@/components/layout/AppHeader';
 import MusicSection from '@/components/music/MusicSection';
@@ -35,7 +34,7 @@ const convertRealArtistsToArtists = (realArtists: any[]): Artist[] => {
 
 // Dados organizados
 const mixesMaisOuvidos = convertRealAlbumsToAlbums(popularMixes);
-const recentesAlbums = convertRealAlbumsToAlbums([...realAlbums].sort(() => 0.5 - Math.random()).slice(0, 8));
+const recentesAlbums = convertRealAlbumsToAlbums([...realAlbums, ...popularMixes].sort(() => 0.5 - Math.random()).slice(0, 8));
 const paraVoceAlbums = convertRealAlbumsToAlbums([...realAlbums, ...popularMixes].sort(() => Math.random() - 0.5).slice(0, 6));
 const novosLancamentosAlbums = convertRealAlbumsToAlbums(realAlbums.filter(album => album.year >= 2020));
 
@@ -134,11 +133,9 @@ const HomePage = () => {
       <AppHeader />
       
       <ScrollArea className="flex-1 overflow-y-auto">
-        <div className="pt-16 pb-32">
+        <div className="pt-20 pb-32 bg-black">
           <div className="space-y-6 mt-4">
-            {currentSong && (
-              <MusicSection title="Recentes" albums={recentesAlbums} />
-            )}
+            <MusicSection title="Recentes" albums={recentesAlbums} />
             
             <MusicSection title="Seus artistas favoritos" artists={seusArtistasFavoritos} />
             
