@@ -40,7 +40,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({ album }) => {
         </div>
       </CardContent>
       <CardFooter className="p-2 flex flex-col items-start">
-        <CardTitle className="text-xs font-semibold text-white truncate w-full" title={album.title}>{album.title}</CardTitle>
+        <CardTitle className="text-xs font-medium text-white truncate w-full" title={album.title}>{album.title}</CardTitle>
         <p className="text-xs text-gray-400 truncate w-full" title={album.artist}>{album.artist}</p>
       </CardFooter>
     </Card>
