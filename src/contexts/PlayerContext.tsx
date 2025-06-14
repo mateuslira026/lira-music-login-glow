@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
 
 export interface Song {
@@ -7,8 +6,8 @@ export interface Song {
   artist: string;
   albumArtUrl: string;
   albumTitle?: string; 
-  trackNumber?: number; 
-  // duration?: number; // Futuramente
+  trackNumber?: number;
+  audioUrl?: string; // URL para reproduzir a música
 }
 
 interface PlayerContextType {
