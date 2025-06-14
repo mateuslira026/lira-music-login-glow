@@ -1,4 +1,3 @@
-
 import React from 'react';
 import AppHeader from '@/components/layout/AppHeader';
 import MusicSection from '@/components/music/MusicSection';
@@ -138,12 +137,12 @@ const HomePage = () => {
   const { currentSong } = usePlayer();
 
   return (
-    <div className="flex flex-col min-h-screen h-full bg-black text-white">
+    <div className="flex flex-col h-screen bg-black text-white">
       <AppHeader />
       
       <div className="flex-1 overflow-y-auto hide-scrollbar">
-        <div className="pt-12 pb-32 bg-black">
-          <div className="space-y-6 mt-4">
+        <div className="pt-4 pb-32">
+          <div className="space-y-6">
             <MusicSection title="Recentes" albums={recentesAlbums} />
             <MusicSection title="Seus artistas favoritos" artists={seusArtistasFavoritos} />
             <MusicSection title="Podcasts" albums={placeholderPodcasts} />

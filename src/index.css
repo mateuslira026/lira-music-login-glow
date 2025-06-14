@@ -79,36 +79,29 @@
 @layer base {
   html {
     @apply dark; /* Force dark mode for Lira Music theme */
-    /* Hide scrollbar but allow scrolling */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
-  }
-
-  html::-webkit-scrollbar {
-    display: none; /* Safari and Chrome */
   }
 
   body {
     @apply bg-background text-foreground font-inter antialiased;
-    min-height: 100vh;
+  }
+
+  #root {
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    /* Hide scrollbar but allow scrolling */
+  }
+
+  /* Hide scrollbars globally while maintaining scroll functionality */
+  * {
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* Internet Explorer 10+ */
   }
 
-  body::-webkit-scrollbar {
+  *::-webkit-scrollbar {
     display: none; /* Safari and Chrome */
   }
 
-  #root {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* Hide scrollbars for specific elements that need it */
+  /* Specific hide-scrollbar class for explicit use */
   .hide-scrollbar {
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* Internet Explorer 10+ */
