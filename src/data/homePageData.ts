@@ -51,8 +51,8 @@ export const recentesAlbums = (() => {
     id: album.id,
     title: album.title,
     artist: album.artist === 'Lira Music' ? album.title : album.artist,
-    coverUrl: album.coverUrl,
-    songs: album.songs,
+    coverUrl: album.coverUrl, // Garantir que coverUrl está sendo preservado
+    songs: album.songs || [],
     year: album.year,
   }));
 })();
