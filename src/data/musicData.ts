@@ -1,4 +1,3 @@
-
 import { Song as PlayerSong } from '@/contexts/PlayerContext';
 
 export interface RealArtist {
@@ -318,7 +317,7 @@ export const popularMixes: RealAlbum[] = [
   {
     id: 'today-hits',
     title: "Today's Top Hits",
-    artist: 'Spotify',
+    artist: 'Lira Music',
     coverUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=500&h=500&fit=crop',
     year: 2024,
     songs: [
@@ -330,7 +329,7 @@ export const popularMixes: RealAlbum[] = [
   {
     id: 'pop-hits',
     title: 'Pop Hits',
-    artist: 'Spotify',
+    artist: 'Lira Music',
     coverUrl: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=500&h=500&fit=crop',
     year: 2024,
     songs: [
@@ -342,7 +341,7 @@ export const popularMixes: RealAlbum[] = [
   {
     id: 'chill-hits',
     title: 'Chill Hits',
-    artist: 'Spotify',
+    artist: 'Lira Music',
     coverUrl: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=500&h=500&fit=crop',
     year: 2024,
     songs: [
@@ -354,7 +353,7 @@ export const popularMixes: RealAlbum[] = [
   {
     id: 'rap-hits',
     title: 'RapCaviar',
-    artist: 'Spotify',
+    artist: 'Lira Music',
     coverUrl: 'https://images.unsplash.com/photo-1571974599782-87663a5d9c44?w=500&h=500&fit=crop',
     year: 2024,
     songs: drakeSongs,
@@ -362,7 +361,7 @@ export const popularMixes: RealAlbum[] = [
   {
     id: 'feel-good',
     title: 'Feel Good Pop',
-    artist: 'Spotify',
+    artist: 'Lira Music',
     coverUrl: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=500&h=500&fit=crop',
     year: 2024,
     songs: [
@@ -373,7 +372,7 @@ export const popularMixes: RealAlbum[] = [
   {
     id: 'throwback',
     title: 'Throwback Hits',
-    artist: 'Spotify',
+    artist: 'Lira Music',
     coverUrl: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=500&h=500&fit=crop',
     year: 2024,
     songs: [
