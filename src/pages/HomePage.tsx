@@ -1,3 +1,4 @@
+
 import React from 'react';
 import AppHeader from '@/components/layout/AppHeader';
 import MusicSection from '@/components/music/MusicSection';
@@ -135,7 +136,6 @@ const HomePage = () => {
       <ScrollArea className="flex-1 overflow-y-auto">
         <div className="pt-2 pb-32">
           <div className="space-y-6 mt-4">
-            <FeaturedSection />
             <MusicSection title="Seus artistas favoritos" artists={seusArtistasFavoritos} />
             
             {currentSong && (
@@ -146,6 +146,7 @@ const HomePage = () => {
             <MusicSection title="Flashback" albums={flashbackData} />
             <MusicSection title="Novos lançamentos" albums={novosLancamentosAlbums} />
             <MusicSection title="Para você" albums={paraVoceAlbums} />
+            <FeaturedSection />
           </div>
         </div>
       </ScrollArea>
