@@ -142,12 +142,11 @@ const HomePage = () => {
       <AppHeader />
       
       <ScrollArea className="flex-1 overflow-y-auto">
-        <div className="pt-20 pb-32 bg-black">
+-        <div className="pt-20 pb-32 bg-black">
++        <div className="pt-12 pb-32 bg-black">
           <div className="space-y-6 mt-4">
             <MusicSection title="Recentes" albums={recentesAlbums} />
-            
             <MusicSection title="Seus artistas favoritos" artists={seusArtistasFavoritos} />
-            
             <MusicSection title="Podcasts" albums={placeholderPodcasts} />
             <MusicSection title="Flashback" albums={flashbackData} />
             <MusicSection title="Novos lançamentos" albums={novosLancamentosAlbums} />
@@ -161,3 +160,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
