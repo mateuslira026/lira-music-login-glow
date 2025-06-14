@@ -5,98 +5,120 @@ import MusicSection from '@/components/music/MusicSection';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Album } from '@/components/music/AlbumCard'; 
 import { Artist } from '@/components/music/ArtistCard';
-import { usePlayer, Song as PlayerSong } from '@/contexts/PlayerContext';
+import { usePlayer } from '@/contexts/PlayerContext';
+import { realArtists, realAlbums, popularMixes, getRealAlbumById } from '@/data/musicData';
 
 export interface AlbumWithSongs extends Album {
-  songs: PlayerSong[];
+  songs: any[];
 }
 
-const createPlaceholderSongs = (albumId: string, artistName: string, albumCover: string, albumTitle: string, numSongs: number): PlayerSong[] => {
-  return Array.from({ length: numSongs }, (s, songIdx) => ({
-    id: `${albumId}-song-${songIdx + 1}`,
-    title: `Música ${songIdx + 1}`,
-    artist: artistName,
-    albumArtUrl: albumCover,
-    albumTitle: albumTitle,
-    trackNumber: songIdx + 1,
+// Converter dados reais para formato esperado pelos componentes
+const convertRealAlbumsToAlbums = (realAlbums: any[]): AlbumWithSongs[] => {
+  return realAlbums.map(album => ({
+    id: album.id,
+    title: album.title,
+    artist: album.artist,
+    coverUrl: album.coverUrl,
+    songs: album.songs,
   }));
 };
 
-const createPlaceholderEpisodes = (podcastId: string, showHost: string, showCover: string, showName: string, numEpisodes: number): PlayerSong[] => {
-  return Array.from({ length: numEpisodes }, (s, episodeIdx) => ({
-    id: `${podcastId}-episode-${episodeIdx + 1}`,
-    title: `Episódio ${episodeIdx + 1}: Tema Interessante`,
-    artist: showHost,
-    albumArtUrl: showCover,
-    albumTitle: showName,
-    trackNumber: episodeIdx + 1,
+const convertRealArtistsToArtists = (realArtists: any[]): Artist[] => {
+  return realArtists.map(artist => ({
+    id: artist.id,
+    name: artist.name,
+    profileImageUrl: artist.profileImageUrl,
+    songs: artist.songs,
   }));
 };
 
-const placeholderAlbums: AlbumWithSongs[] = Array.from({ length: 20 }, (_, i) => {
-  const albumId = `album-${i + 1}`;
-  const albumCover = `https://picsum.photos/seed/${albumId}/200/200`;
-  const artistName = `Artista Variado ${i % 5 + 1}`;
-  const albumTitle = `Coletânea ${i + 1}`;
-  return {
-    id: albumId,
-    title: albumTitle,
-    artist: artistName,
-    coverUrl: albumCover,
-    songs: createPlaceholderSongs(albumId, artistName, albumCover, albumTitle, 5 + (i % 5)),
-  };
-});
+// Dados organizados
+const mixesMaisOuvidos = convertRealAlbumsToAlbums(popularMixes);
+const recentesAlbums = convertRealAlbumsToAlbums([...realAlbums].sort(() => 0.5 - Math.random()).slice(0, 8));
+const paraVoceAlbums = convertRealAlbumsToAlbums([...realAlbums, ...popularMixes].sort(() => Math.random() - 0.5).slice(0, 6));
+const novosLancamentosAlbums = convertRealAlbumsToAlbums(realAlbums.filter(album => album.year >= 2020));
 
-const mixesMaisOuvidos = placeholderAlbums.slice(0, 7);
-const recentesAlbums = [...placeholderAlbums].sort(() => 0.5 - Math.random()).slice(0, 8);
-const paraVoceAlbums = [...placeholderAlbums].sort(() => Math.random() - 0.5).slice(0, 6);
-const novosLancamentosAlbums = [...placeholderAlbums].sort(() => Math.random() - 0.5).slice(0, 5);
+const seusArtistasFavoritos = convertRealArtistsToArtists(realArtists);
 
-const artistNames = ['Adele', 'Ed Sheeran', 'Taylor Swift', 'Drake', 'Billie Eilish'];
+const flashbackData = convertRealAlbumsToAlbums([
+  {
+    id: 'flashback-2010s',
+    title: 'Flashback 2010s',
+    artist: 'Clássicos da Década',
+    coverUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=200&h=200&fit=crop',
+    year: 2010,
+    songs: [
+      ...realArtists.find(a => a.name === 'Taylor Swift')?.songs.slice(2, 4) || [],
+      ...realArtists.find(a => a.name === 'Adele')?.songs.slice(0, 2) || [],
+      ...realArtists.find(a => a.name === 'Ed Sheeran')?.songs.slice(2, 3) || [],
+    ],
+  },
+  {
+    id: 'flashback-2020s',
+    title: 'Flashback 2020s',
+    artist: 'Hits Recentes',
+    coverUrl: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=200&h=200&fit=crop',
+    year: 2020,
+    songs: [
+      ...realArtists.find(a => a.name === 'Taylor Swift')?.songs.slice(0, 2) || [],
+      ...realArtists.find(a => a.name === 'Billie Eilish')?.songs.slice(0, 2) || [],
+      ...realArtists.find(a => a.name === 'Drake')?.songs.slice(0, 2) || [],
+    ],
+  },
+]);
 
-const seusArtistasFavoritos: Artist[] = Array.from({ length: 5 }, (_, i) => {
-  const artistId = `fav-artist-${i + 1}`;
-  const artistName = artistNames[i];
-  const profileImageUrl = `https://picsum.photos/seed/artist-${artistId}/400/400`;
-  return {
-    id: artistId,
-    name: artistName,
-    profileImageUrl: profileImageUrl,
-    songs: createPlaceholderSongs(artistId, artistName, profileImageUrl, artistName, 1 + (i % 3)),
-  };
-});
-
-const flashbackData: AlbumWithSongs[] = Array.from({ length: 6 }, (_, i) => {
-  const flashbackId = `flashback-${i + 1}`;
-  const year = 1980 + i * 5;
-  const title = `Flashback ${year}s`;
-  const coverUrl = `https://picsum.photos/seed/${flashbackId}/200/200`;
-  return {
-    id: flashbackId,
-    title: title,
-    artist: "Clássicos Inesquecíveis",
-    coverUrl: coverUrl,
-    songs: createPlaceholderSongs(flashbackId, "Vários Artistas", coverUrl, title, 7 + (i % 4)),
-  };
-});
-
-const placeholderPodcasts: AlbumWithSongs[] = Array.from({ length: 7 }, (_, i) => {
-  const podcastId = `podcast-${i + 1}`;
-  const podcastCover = `https://picsum.photos/seed/${podcastId}/200/200`;
-  const showHost = `Apresentador ${i + 1}`;
-  const showName = `Podcast Show ${i + 1}`;
-  return {
-    id: podcastId,
-    title: showName,
-    artist: showHost,
-    coverUrl: podcastCover,
-    songs: createPlaceholderEpisodes(podcastId, showHost, podcastCover, showName, 3 + (i % 3)),
-  };
-});
+const placeholderPodcasts = convertRealAlbumsToAlbums([
+  {
+    id: 'podcast-1',
+    title: 'The Joe Rogan Experience',
+    artist: 'Joe Rogan',
+    coverUrl: 'https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=200&h=200&fit=crop',
+    year: 2024,
+    songs: [
+      {
+        id: 'podcast-1-ep-1',
+        title: 'Episódio #2081 - Conversas Profundas',
+        artist: 'Joe Rogan',
+        albumArtUrl: 'https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=200&h=200&fit=crop',
+        albumTitle: 'The Joe Rogan Experience',
+        trackNumber: 1,
+      },
+    ],
+  },
+  {
+    id: 'podcast-2',
+    title: 'Podpah',
+    artist: 'Igor & Mitico',
+    coverUrl: 'https://images.unsplash.com/photo-1589903308904-1010c2294adc?w=200&h=200&fit=crop',
+    year: 2024,
+    songs: [
+      {
+        id: 'podcast-2-ep-1',
+        title: 'Episódio #479 - Papo Aleatório',
+        artist: 'Igor & Mitico',
+        albumArtUrl: 'https://images.unsplash.com/photo-1589903308904-1010c2294adc?w=200&h=200&fit=crop',
+        albumTitle: 'Podpah',
+        trackNumber: 1,
+      },
+    ],
+  },
+]);
 
 export const getAlbumById = (id: string): AlbumWithSongs | undefined => {
+  const realAlbum = getRealAlbumById(id);
+  if (realAlbum) {
+    return {
+      id: realAlbum.id,
+      title: realAlbum.title,
+      artist: realAlbum.artist,
+      coverUrl: realAlbum.coverUrl,
+      songs: realAlbum.songs,
+    };
+  }
+  
   const allAlbums = [
-    ...placeholderAlbums,
+    ...convertRealAlbumsToAlbums(realAlbums),
+    ...convertRealAlbumsToAlbums(popularMixes),
     ...flashbackData,
     ...placeholderPodcasts,
   ];
