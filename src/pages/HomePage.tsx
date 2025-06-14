@@ -33,12 +33,12 @@ const HomePage = () => {
         <div className="pt-4 pb-32">
           <div className="space-y-6">
             <SpotifyPlaylists />
-            <MusicSection title="Recentes" albums={recentesAlbuns} />
+            <MusicSection title="Recentes" albums={recentesAlbums} />
             <MusicSection title="Seus artistas favoritos" artists={seusArtistasFavoritos} />
             <MusicSection title="Podcasts" albums={placeholderPodcasts} />
             <MusicSection title="Flashback" albums={flashbackData} />
             <MusicSection title="Novos lançamentos" albums={novosLancamentosAlbums} />
-            <MusicSection title="Para você" albums={paraVoceAlbuns} />
+            <MusicSection title="Para você" albums={paraVoceAlbums} />
             <FeaturedSection />
           </div>
         </div>

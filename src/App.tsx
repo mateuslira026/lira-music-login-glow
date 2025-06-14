@@ -24,6 +24,7 @@ import AlbumDetailPage from "./pages/AlbumDetailPage";
 import CategoryDetailPage from "./pages/CategoryDetailPage";
 import LikedSongsPage from "./pages/LikedSongsPage";
 import ArtistProfilePage from "./pages/ArtistProfilePage";
+import SpotifyCallbackPage from "./pages/SpotifyCallbackPage";
 import NotFound from "./pages/NotFound";
 import "./App.css";
 
