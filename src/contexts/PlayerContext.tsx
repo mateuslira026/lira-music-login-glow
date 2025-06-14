@@ -37,16 +37,47 @@ interface PlayerContextType {
 
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
 
-// Real audio URLs for testing
-const getAudioUrl = (songId: string): string => {
-  const audioUrls: Record<string, string> = {
+// Royalty-free audio URLs for testing
+const getRoyaltyFreeAudioUrl = (songId: string): string => {
+  const royaltyFreeAudioUrls: Record<string, string> = {
+    // Relaxing/Ambient tracks
     '1': 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_7bf21c5b9c.mp3?filename=relaxing-music-1-6033.mp3',
-    '2': 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
-    '3': 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_7bf21c5b9c.mp3?filename=relaxing-music-1-6033.mp3',
-    // Add more real audio URLs as needed
+    '2': 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3',
+    '3': 'https://cdn.pixabay.com/download/audio/2022/08/04/audio_884c9b4f1e.mp3?filename=chill-abstract-12099.mp3',
+    
+    // Upbeat/Electronic tracks
+    'taylor-1': 'https://cdn.pixabay.com/download/audio/2022/02/22/audio_d1718ab41b.mp3?filename=beat-tokyo-114751.mp3',
+    'taylor-2': 'https://cdn.pixabay.com/download/audio/2021/08/04/audio_12b0c7443c.mp3?filename=summer-walk-152722.mp3',
+    'taylor-3': 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_7bf21c5b9c.mp3?filename=relaxing-music-1-6033.mp3',
+    'taylor-4': 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3',
+    
+    // Hip-hop/Rap style tracks
+    'drake-1': 'https://cdn.pixabay.com/download/audio/2022/08/02/audio_2dde668d05.mp3?filename=energy-111134.mp3',
+    'drake-2': 'https://cdn.pixabay.com/download/audio/2022/02/22/audio_d1718ab41b.mp3?filename=beat-tokyo-114751.mp3',
+    'drake-3': 'https://cdn.pixabay.com/download/audio/2021/08/04/audio_12b0c7443c.mp3?filename=summer-walk-152722.mp3',
+    'drake-4': 'https://cdn.pixabay.com/download/audio/2022/08/04/audio_884c9b4f1e.mp3?filename=chill-abstract-12099.mp3',
+    
+    // Alternative/Indie style tracks
+    'billie-1': 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3',
+    'billie-2': 'https://cdn.pixabay.com/download/audio/2022/08/04/audio_884c9b4f1e.mp3?filename=chill-abstract-12099.mp3',
+    'billie-3': 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_7bf21c5b9c.mp3?filename=relaxing-music-1-6033.mp3',
+    'billie-4': 'https://cdn.pixabay.com/download/audio/2022/08/02/audio_2dde668d05.mp3?filename=energy-111134.mp3',
+    
+    // Acoustic/Folk style tracks
+    'ed-1': 'https://cdn.pixabay.com/download/audio/2021/08/04/audio_12b0c7443c.mp3?filename=summer-walk-152722.mp3',
+    'ed-2': 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_7bf21c5b9c.mp3?filename=relaxing-music-1-6033.mp3',
+    'ed-3': 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3',
+    'ed-4': 'https://cdn.pixabay.com/download/audio/2022/08/04/audio_884c9b4f1e.mp3?filename=chill-abstract-12099.mp3',
+    
+    // Soul/R&B style tracks
+    'adele-1': 'https://cdn.pixabay.com/download/audio/2022/08/02/audio_2dde668d05.mp3?filename=energy-111134.mp3',
+    'adele-2': 'https://cdn.pixabay.com/download/audio/2022/02/22/audio_d1718ab41b.mp3?filename=beat-tokyo-114751.mp3',
+    'adele-3': 'https://cdn.pixabay.com/download/audio/2021/08/04/audio_12b0c7443c.mp3?filename=summer-walk-152722.mp3',
+    'adele-4': 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3',
   };
   
-  return audioUrls[songId] || 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav';
+  // Fallback to a default royalty-free track
+  return royaltyFreeAudioUrls[songId] || 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_7bf21c5b9c.mp3?filename=relaxing-music-1-6033.mp3';
 };
 
 export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -83,11 +114,11 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   }, [likedSongs]);
 
   const loadSongAudio = useCallback(async (song: Song) => {
-    console.log('Loading audio for song:', song.title);
+    console.log('Loading royalty-free audio for song:', song.title);
     
-    // Use the real audio URL or get one based on song ID
-    const audioUrl = song.audioUrl || getAudioUrl(song.id);
-    console.log('Audio URL:', audioUrl);
+    // Use the royalty-free audio URL or get one based on song ID
+    const audioUrl = song.audioUrl || getRoyaltyFreeAudioUrl(song.id);
+    console.log('Royalty-free Audio URL:', audioUrl);
     
     audioPlayer.loadAudio(audioUrl);
   }, [audioPlayer]);

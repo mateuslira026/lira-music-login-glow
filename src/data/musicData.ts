@@ -17,7 +17,7 @@ export interface RealAlbum {
   songs: PlayerSong[];
 }
 
-// Taylor Swift
+// Taylor Swift (usando áudios royalty-free)
 const taylorSwiftSongs: PlayerSong[] = [
   {
     id: 'taylor-1',
@@ -26,7 +26,7 @@ const taylorSwiftSongs: PlayerSong[] = [
     albumArtUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=500&h=500&fit=crop',
     albumTitle: 'Midnights',
     trackNumber: 1,
-    audioUrl: 'https://www.youtube.com/watch?v=bJojPLzLyLY',
+    // audioUrl será fornecido pelo sistema de áudio royalty-free
   },
   {
     id: 'taylor-2',
@@ -35,7 +35,6 @@ const taylorSwiftSongs: PlayerSong[] = [
     albumArtUrl: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=500&h=500&fit=crop',
     albumTitle: '1989',
     trackNumber: 1,
-    audioUrl: 'https://www.youtube.com/watch?v=nfWlot6h_JM',
   },
   {
     id: 'taylor-3',
@@ -44,7 +43,6 @@ const taylorSwiftSongs: PlayerSong[] = [
     albumArtUrl: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=500&h=500&fit=crop',
     albumTitle: '1989',
     trackNumber: 2,
-    audioUrl: 'https://www.youtube.com/watch?v=mWmT8f43FQk',
   },
   {
     id: 'taylor-4',
@@ -53,11 +51,10 @@ const taylorSwiftSongs: PlayerSong[] = [
     albumArtUrl: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=500&h=500&fit=crop',
     albumTitle: 'Fearless',
     trackNumber: 1,
-    audioUrl: 'https://www.youtube.com/watch?v=8xg3vE8Ie_E',
   },
 ];
 
-// Drake
+// Drake (usando áudios royalty-free)
 const drakeSongs: PlayerSong[] = [
   {
     id: 'drake-1',
@@ -66,7 +63,6 @@ const drakeSongs: PlayerSong[] = [
     albumArtUrl: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=500&h=500&fit=crop',
     albumTitle: 'Scorpion',
     trackNumber: 1,
-    audioUrl: 'https://www.youtube.com/watch?v=xpVfcZ0ZcFM',
   },
   {
     id: 'drake-2',
@@ -75,7 +71,6 @@ const drakeSongs: PlayerSong[] = [
     albumArtUrl: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=500&h=500&fit=crop',
     albumTitle: 'Scorpion',
     trackNumber: 2,
-    audioUrl: 'https://www.youtube.com/watch?v=DRS_PpOrUZ4',
   },
   {
     id: 'drake-3',
@@ -84,7 +79,6 @@ const drakeSongs: PlayerSong[] = [
     albumArtUrl: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=500&h=500&fit=crop',
     albumTitle: 'Views',
     trackNumber: 1,
-    audioUrl: 'https://www.youtube.com/watch?v=uxpDa-c-4Mc',
   },
   {
     id: 'drake-4',
@@ -93,11 +87,10 @@ const drakeSongs: PlayerSong[] = [
     albumArtUrl: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=500&h=500&fit=crop',
     albumTitle: 'Views',
     trackNumber: 2,
-    audioUrl: 'https://www.youtube.com/watch?v=DhCWBxNanuM',
   },
 ];
 
-// Billie Eilish
+// Billie Eilish (usando áudios royalty-free)
 const billieEilishSongs: PlayerSong[] = [
   {
     id: 'billie-1',
@@ -106,7 +99,6 @@ const billieEilishSongs: PlayerSong[] = [
     albumArtUrl: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=500&h=500&fit=crop',
     albumTitle: 'When We All Fall Asleep, Where Do We Go?',
     trackNumber: 1,
-    audioUrl: 'https://www.youtube.com/watch?v=DyDfgMOUjCI',
   },
   {
     id: 'billie-2',
@@ -115,7 +107,6 @@ const billieEilishSongs: PlayerSong[] = [
     albumArtUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=500&h=500&fit=crop',
     albumTitle: 'Happier Than Ever',
     trackNumber: 1,
-    audioUrl: 'https://www.youtube.com/watch?v=5GJWxDKyk3A',
   },
   {
     id: 'billie-3',
@@ -124,7 +115,6 @@ const billieEilishSongs: PlayerSong[] = [
     albumArtUrl: 'https://images.unsplash.com/photo-1571974599782-87663a5d9c44?w=500&h=500&fit=crop',
     albumTitle: 'Dont Smile At Me',
     trackNumber: 1,
-    audioUrl: 'https://www.youtube.com/watch?v=viimfQi_pUw',
   },
   {
     id: 'billie-4',
@@ -133,11 +123,10 @@ const billieEilishSongs: PlayerSong[] = [
     albumArtUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=500&h=500&fit=crop',
     albumTitle: 'Happier Than Ever',
     trackNumber: 2,
-    audioUrl: 'https://www.youtube.com/watch?v=RUQl6YcMalg',
   },
 ];
 
-// Ed Sheeran
+// Ed Sheeran (usando áudios royalty-free)
 const edSheeranSongs: PlayerSong[] = [
   {
     id: 'ed-1',
@@ -146,7 +135,6 @@ const edSheeranSongs: PlayerSong[] = [
     albumArtUrl: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=500&h=500&fit=crop',
     albumTitle: '÷ (Divide)',
     trackNumber: 1,
-    audioUrl: 'https://www.youtube.com/watch?v=JGwWNGJdvx8',
   },
   {
     id: 'ed-2',
@@ -155,7 +143,6 @@ const edSheeranSongs: PlayerSong[] = [
     albumArtUrl: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=500&h=500&fit=crop',
     albumTitle: '÷ (Divide)',
     trackNumber: 2,
-    audioUrl: 'https://www.youtube.com/watch?v=2Vv-BfVoq4g',
   },
   {
     id: 'ed-3',
@@ -164,7 +151,6 @@ const edSheeranSongs: PlayerSong[] = [
     albumArtUrl: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=500&h=500&fit=crop',
     albumTitle: 'x (Multiply)',
     trackNumber: 1,
-    audioUrl: 'https://www.youtube.com/watch?v=lp-EO5I60KA',
   },
   {
     id: 'ed-4',
@@ -173,11 +159,10 @@ const edSheeranSongs: PlayerSong[] = [
     albumArtUrl: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=500&h=500&fit=crop',
     albumTitle: '÷ (Divide)',
     trackNumber: 3,
-    audioUrl: 'https://www.youtube.com/watch?v=K0ibBPhiaG0',
   },
 ];
 
-// Adele
+// Adele (usando áudios royalty-free)
 const adeleSongs: PlayerSong[] = [
   {
     id: 'adele-1',
@@ -186,7 +171,6 @@ const adeleSongs: PlayerSong[] = [
     albumArtUrl: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=500&h=500&fit=crop',
     albumTitle: '21',
     trackNumber: 1,
-    audioUrl: 'https://www.youtube.com/watch?v=rYEDA3JcQqw',
   },
   {
     id: 'adele-2',
@@ -195,7 +179,6 @@ const adeleSongs: PlayerSong[] = [
     albumArtUrl: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=500&h=500&fit=crop',
     albumTitle: '21',
     trackNumber: 2,
-    audioUrl: 'https://www.youtube.com/watch?v=hLQl3WQQoQ0',
   },
   {
     id: 'adele-3',
@@ -204,7 +187,6 @@ const adeleSongs: PlayerSong[] = [
     albumArtUrl: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=500&h=500&fit=crop',
     albumTitle: '25',
     trackNumber: 1,
-    audioUrl: 'https://www.youtube.com/watch?v=YQHsXMglC9A',
   },
   {
     id: 'adele-4',
@@ -213,7 +195,6 @@ const adeleSongs: PlayerSong[] = [
     albumArtUrl: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=500&h=500&fit=crop',
     albumTitle: '21',
     trackNumber: 3,
-    audioUrl: 'https://www.youtube.com/watch?v=FlsBObg-1BQ',
   },
 ];
 
