@@ -1,22 +1,29 @@
 
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Play, Pause, Shuffle, Heart, MoreHorizontal } from 'lucide-react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { ArrowLeft, Play, Pause, Shuffle, MoreHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { usePlayer } from '@/contexts/PlayerContext';
-import { Artist } from '@/components/music/ArtistCard';
+import { getRealArtistById } from '@/data/musicData';
 
 const ArtistProfilePage = () => {
-  const location = useLocation();
+  const { artistId } = useParams();
   const navigate = useNavigate();
   const { setCurrentSong, currentSong, isPlaying, togglePlay } = usePlayer();
-  const artist = location.state?.artist as Artist;
+
+  // Busca o artista pelos dados reais usando o ID da URL
+  const artist = artistId ? getRealArtistById(artistId) : null;
 
   if (!artist) {
     return (
       <div className="min-h-screen bg-lira-dark-page flex items-center justify-center pt-16">
-        <p className="text-white">Artista não encontrado</p>
+        <div className="text-center">
+          <p className="text-white text-xl mb-4">Artista não encontrado</p>
+          <Button onClick={() => navigate('/home')} className="bg-lira-blue hover:bg-lira-blue/80">
+            Voltar ao Início
+          </Button>
+        </div>
       </div>
     );
   }
@@ -77,7 +84,7 @@ const ArtistProfilePage = () => {
               <div>
                 <h1 className="text-3xl font-bold mb-1">{artist.name}</h1>
                 <p className="text-gray-300 text-sm">
-                  {(popularSongs.length * 1000000).toLocaleString()} ouvintes mensais
+                  {artist.monthlyListeners?.toLocaleString() || (popularSongs.length * 1000000).toLocaleString()} ouvintes mensais
                 </p>
               </div>
             </div>

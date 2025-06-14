@@ -19,7 +19,8 @@ const ArtistCard: React.FC<ArtistCardProps> = ({ artist }) => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    navigate(`/artist/${artist.id}`, { state: { artist } });
+    // Passa apenas o ID do artista pela URL, os dados serão buscados na página de destino
+    navigate(`/artist/${artist.id}`);
   };
 
   return (
