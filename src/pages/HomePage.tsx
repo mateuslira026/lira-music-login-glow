@@ -36,7 +36,15 @@ const convertRealArtistsToArtists = (realArtists: any[]): Artist[] => {
 // Dados organizados
 const mixesMaisOuvidos = convertRealAlbumsToAlbums(popularMixes);
 const recentesAlbums = convertRealAlbumsToAlbums([...realAlbums, ...popularMixes].sort(() => 0.5 - Math.random()).slice(0, 8));
-const paraVoceAlbums = convertRealAlbumsToAlbums([...realAlbums, ...popularMixes].sort(() => 0.3 - Math.random()).slice(0, 8));
+
+// Criar uma lista personalizada para "Para você" com mais variedade
+const createParaVoceAlbums = (): AlbumWithSongs[] => {
+  const allContent = [...realAlbums, ...popularMixes];
+  const shuffled = allContent.sort(() => Math.random() - 0.5);
+  return convertRealAlbumsToAlbums(shuffled.slice(0, 8));
+};
+
+const paraVoceAlbums = createParaVoceAlbums();
 const novosLancamentosAlbums = convertRealAlbumsToAlbums(realAlbums.filter(album => album.year >= 2020));
 
 const seusArtistasFavoritos = convertRealArtistsToArtists(realArtists);
