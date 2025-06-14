@@ -37,14 +37,16 @@ interface PlayerContextType {
 
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
 
-// Simple function to get YouTube audio stream URL
-const getYouTubeAudioUrl = (youtubeUrl: string): string => {
-  // Extract video ID from YouTube URL
-  const videoId = youtubeUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/)?.[1];
-  if (!videoId) return '';
+// Real audio URLs for testing
+const getAudioUrl = (songId: string): string => {
+  const audioUrls: Record<string, string> = {
+    '1': 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_7bf21c5b9c.mp3?filename=relaxing-music-1-6033.mp3',
+    '2': 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
+    '3': 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_7bf21c5b9c.mp3?filename=relaxing-music-1-6033.mp3',
+    // Add more real audio URLs as needed
+  };
   
-  // Use a public YouTube audio proxy service
-  return `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&rel=0&showinfo=0`;
+  return audioUrls[songId] || 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav';
 };
 
 export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -81,16 +83,12 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   }, [likedSongs]);
 
   const loadSongAudio = useCallback(async (song: Song) => {
-    if (!song.audioUrl) {
-      console.warn('No audio URL provided for song:', song.title);
-      return;
-    }
-
-    console.log('Loading audio for song:', song.title, 'URL:', song.audioUrl);
+    console.log('Loading audio for song:', song.title);
     
-    // For demo purposes, we'll use a placeholder audio file
-    // In a real app, you'd need proper audio URLs or a streaming service
-    const audioUrl = 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav';
+    // Use the real audio URL or get one based on song ID
+    const audioUrl = song.audioUrl || getAudioUrl(song.id);
+    console.log('Audio URL:', audioUrl);
+    
     audioPlayer.loadAudio(audioUrl);
   }, [audioPlayer]);
 
