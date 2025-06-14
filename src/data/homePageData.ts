@@ -59,14 +59,14 @@ export const recentesAlbums = (() => {
 
 export const paraVoceAlbums = createParaVoceAlbums();
 
-// Expandir novos lançamentos para incluir mais álbums
+// Expandir novos lançamentos para incluir mais álbuns
 export const novosLancamentosAlbums = convertRealAlbumsToAlbums([
   ...realAlbums.filter(album => album.year >= 2020),
   // Adicionar alguns mixes como "novos lançamentos"
   ...popularMixes.slice(0, 4)
 ]);
 
-export const seusArtistasFavoritos = convertRealArtistsToArtists(realArtistas);
+export const seusArtistasFavoritos = convertRealArtistsToArtists(realArtists);
 
 // Export the data from other files
 export { flashbackData } from './flashbackData';
