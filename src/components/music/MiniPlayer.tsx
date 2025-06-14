@@ -28,25 +28,7 @@ const MiniPlayer = () => {
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   // Simular progresso da música
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (isPlaying) {
-      interval = setInterval(() => {
-        setProgress((prev) => {
-          const next = prev + 1;
-          return next >= 100 ? 0 : next;
-        });
-      }, 300); // Atualiza a cada 300ms para movimento suave
-    }
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [isPlaying]);
-
   // Reset progress when song changes
-  useEffect(() => {
-    setProgress(0);
-  }, [currentSong?.id]);
 
   useEffect(() => {
     if (currentSong?.albumArtUrl) {
