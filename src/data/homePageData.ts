@@ -1,3 +1,4 @@
+
 import { Album } from '@/components/music/AlbumCard';
 import { Artist } from '@/components/music/ArtistCard';
 import { Song as PlayerSong } from '@/contexts/PlayerContext';
@@ -40,7 +41,22 @@ const createParaVoceAlbums = (): AlbumWithSongs[] => {
 
 // Dados organizados
 export const mixesMaisOuvidos = convertRealAlbumsToAlbums(popularMixes);
-export const recentesAlbums = convertRealAlbumsToAlbums([...realAlbums, ...popularMixes].sort(() => 0.5 - Math.random()).slice(0, 8));
+
+// Criar recentes albums removendo "Lira Music" dos mixes e deixando só o título
+export const recentesAlbums = (() => {
+  const allContent = [...realAlbums, ...popularMixes];
+  const shuffled = allContent.sort(() => 0.5 - Math.random()).slice(0, 8);
+  
+  return shuffled.map(album => ({
+    id: album.id,
+    title: album.title,
+    artist: album.artist === 'Lira Music' ? album.title : album.artist,
+    coverUrl: album.coverUrl,
+    songs: album.songs,
+    year: album.year,
+  }));
+})();
+
 export const paraVoceAlbums = createParaVoceAlbums();
 
 // Expandir novos lançamentos para incluir mais álbums
@@ -50,7 +66,7 @@ export const novosLancamentosAlbums = convertRealAlbumsToAlbums([
   ...popularMixes.slice(0, 4)
 ]);
 
-export const seusArtistasFavoritos = convertRealArtistsToArtists(realArtists);
+export const seusArtistasFavoritos = convertRealArtistsToArtists(realArtistas);
 
 // Export the data from other files
 export { flashbackData } from './flashbackData';
