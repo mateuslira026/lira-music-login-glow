@@ -354,7 +354,7 @@ export const popularMixes: RealAlbum[] = [
     id: 'rap-hits',
     title: 'RapCaviar',
     artist: 'Lira Music',
-    coverUrl: 'https://images.unsplash.com/photo-1571974599782-87663a5d9c44?w=500&h=500&fit=crop',
+    coverUrl: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=500&h=500&fit=crop',
     year: 2024,
     songs: drakeSongs,
   },
