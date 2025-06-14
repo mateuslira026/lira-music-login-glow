@@ -1,4 +1,3 @@
-
 import React from 'react';
 import AppHeader from '@/components/layout/AppHeader';
 import MusicSection from '@/components/music/MusicSection';
@@ -142,8 +141,7 @@ const HomePage = () => {
       <AppHeader />
       
       <ScrollArea className="flex-1 overflow-y-auto">
--        <div className="pt-20 pb-32 bg-black">
-+        <div className="pt-12 pb-32 bg-black">
+        <div className="pt-12 pb-32 bg-black">
           <div className="space-y-6 mt-4">
             <MusicSection title="Recentes" albums={recentesAlbums} />
             <MusicSection title="Seus artistas favoritos" artists={seusArtistasFavoritos} />
@@ -160,4 +158,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
