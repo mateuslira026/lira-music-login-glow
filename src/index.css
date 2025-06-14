@@ -77,29 +77,15 @@
 }
 
 @layer base {
-  * {
-    @apply border-border;
-    /* Hide scrollbar for all browsers */
-    scrollbar-width: none !important; /* Firefox */
-    -ms-overflow-style: none !important; /* Internet Explorer 10+ */
-  }
-
-  *::-webkit-scrollbar {
-    display: none !important; /* Safari and Chrome */
-    width: 0 !important;
-    height: 0 !important;
-    background: transparent !important;
-  }
-
   html {
     @apply dark; /* Force dark mode for Lira Music theme */
-    overflow-y: auto;
-    scrollbar-width: none !important;
-    -ms-overflow-style: none !important;
+    /* Hide scrollbar but allow scrolling */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
   }
 
   html::-webkit-scrollbar {
-    display: none !important;
+    display: none; /* Safari and Chrome */
   }
 
   body {
@@ -107,19 +93,28 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    /* Hide scrollbar for all browsers */
-    overflow-y: auto;
-    scrollbar-width: none !important; /* Firefox */
-    -ms-overflow-style: none !important; /* Internet Explorer 10+ */
+    /* Hide scrollbar but allow scrolling */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
   }
 
   body::-webkit-scrollbar {
-    display: none !important; /* Safari and Chrome */
+    display: none; /* Safari and Chrome */
   }
 
   #root {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+  }
+
+  /* Hide scrollbars for specific elements that need it */
+  .hide-scrollbar {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
   }
 }

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import AppHeader from '@/components/layout/AppHeader';
 import MusicSection from '@/components/music/MusicSection';
@@ -140,7 +141,7 @@ const HomePage = () => {
     <div className="flex flex-col min-h-screen h-full bg-black text-white">
       <AppHeader />
       
-      <ScrollArea className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto hide-scrollbar">
         <div className="pt-12 pb-32 bg-black">
           <div className="space-y-6 mt-4">
             <MusicSection title="Recentes" albums={recentesAlbums} />
@@ -152,7 +153,7 @@ const HomePage = () => {
             <FeaturedSection />
           </div>
         </div>
-      </ScrollArea>
+      </div>
     </div>
   );
 };
