@@ -130,11 +130,11 @@ const HomePage = () => {
   const { currentSong } = usePlayer();
 
   return (
-    <div className="flex flex-col min-h-screen h-full bg-gradient-to-b from-lira-dark-page to-black text-white">
+    <div className="flex flex-col min-h-screen h-full bg-black text-white">
       <AppHeader />
       
       <ScrollArea className="flex-1 overflow-y-auto">
-        <div className="pt-2 pb-32">
+        <div className="pt-16 pb-32">
           <div className="space-y-6 mt-4">
             {currentSong && (
               <MusicSection title="Recentes" albums={recentesAlbums} />
