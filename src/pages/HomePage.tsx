@@ -1,3 +1,4 @@
+
 import React from 'react';
 import AppHeader from '@/components/layout/AppHeader';
 import MusicSection from '@/components/music/MusicSection';
@@ -35,7 +36,7 @@ const convertRealArtistsToArtists = (realArtists: any[]): Artist[] => {
 // Dados organizados
 const mixesMaisOuvidos = convertRealAlbumsToAlbums(popularMixes);
 const recentesAlbums = convertRealAlbumsToAlbums([...realAlbums, ...popularMixes].sort(() => 0.5 - Math.random()).slice(0, 8));
-const paraVoceAlbums = convertRealAlbumsToAlbums([...realAlbums, ...popularMixes].sort(() => Math.random() - 0.5).slice(0, 6));
+const paraVoceAlbums = convertRealAlbumsToAlbums([...realAlbums, ...popularMixes].sort(() => 0.3 - Math.random()).slice(0, 8));
 const novosLancamentosAlbums = convertRealAlbumsToAlbums(realAlbums.filter(album => album.year >= 2020));
 
 const seusArtistasFavoritos = convertRealArtistsToArtists(realArtists);
