@@ -15,9 +15,8 @@ import {
   AlbumWithSongs
 } from '@/data/homePageData';
 
-// Export the interface and function for backward compatibility
-export interface AlbumWithSongs extends AlbumWithSongs {}
-export { getAlbumById };
+// Export the function for backward compatibility
+export { getAlbumById, type AlbumWithSongs };
 
 const HomePage = () => {
   const { currentSong } = usePlayer();

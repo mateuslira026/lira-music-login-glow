@@ -1,4 +1,3 @@
-
 import { Album } from '@/components/music/AlbumCard';
 import { Artist } from '@/components/music/ArtistCard';
 import { Song as PlayerSong } from '@/contexts/PlayerContext';
@@ -8,6 +7,7 @@ import { placeholderPodcasts } from './podcastData';
 
 export interface AlbumWithSongs extends Album {
   songs: any[];
+  year?: number;
 }
 
 // Converter dados reais para formato esperado pelos componentes
@@ -18,6 +18,7 @@ const convertRealAlbumsToAlbums = (realAlbums: any[]): AlbumWithSongs[] => {
     artist: album.artist,
     coverUrl: album.coverUrl,
     songs: album.songs,
+    year: album.year,
   }));
 };
 
@@ -64,6 +65,7 @@ export const getAlbumById = (id: string): AlbumWithSongs | undefined => {
       artist: realAlbum.artist,
       coverUrl: realAlbum.coverUrl,
       songs: realAlbum.songs,
+      year: realAlbum.year,
     };
   }
   
