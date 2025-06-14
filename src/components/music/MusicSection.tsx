@@ -21,13 +21,17 @@ const MusicSection: React.FC<MusicSectionProps> = ({ title, albums, artists }) =
     navigate(`/category/${encodedTitle}`, { state: { albums: dataToPass, categoryTitle: title } });
   };
 
+  console.log('MusicSection - Rendering title:', title);
+  console.log('MusicSection - Albums:', albums?.length || 0);
+  console.log('MusicSection - Artists:', artists?.length || 0);
+
   return (
     <section className="mb-6 px-4">
       <div className="flex items-center justify-between mb-3">
-        <h2 className="text-lg font-bold text-white">{title}</h2>
+        <h2 className="text-xl font-bold text-white">{title}</h2>
         <button 
           onClick={handleSeeMore}
-          className="text-xs text-lira-blue hover:underline"
+          className="text-sm text-lira-blue hover:underline font-medium"
         >
           Ver mais
         </button>
