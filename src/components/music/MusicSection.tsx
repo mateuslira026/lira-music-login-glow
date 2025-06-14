@@ -31,7 +31,7 @@ const MusicSection: React.FC<MusicSectionProps> = ({ title, albums, artists }) =
         <h2 className="text-lg font-bold text-white block">{title}</h2>
         <button 
           onClick={handleSeeMore}
-          className="text-sm text-lira-blue hover:underline font-medium flex-shrink-0"
+          className="text-xs text-lira-blue hover:underline font-medium flex-shrink-0"
         >
           Ver mais
         </button>
