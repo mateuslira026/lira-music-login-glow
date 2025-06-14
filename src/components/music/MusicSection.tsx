@@ -28,7 +28,7 @@ const MusicSection: React.FC<MusicSectionProps> = ({ title, albums, artists }) =
   return (
     <section className="mb-8 px-4">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-bold text-white block">{title}</h2>
+        <h2 className="text-lg font-bold text-white">{title}</h2>
         <button 
           onClick={handleSeeMore}
           className="text-xs text-lira-blue hover:underline font-medium flex-shrink-0"
