@@ -42,19 +42,22 @@ const createParaVoceAlbums = (): AlbumWithSongs[] => {
 // Dados organizados
 export const mixesMaisOuvidos = convertRealAlbumsToAlbums(popularMixes);
 
-// Criar recentes albums removendo "Lira Music" dos mixes e deixando só o título
+// Criar recentes albums com imagens corretas
 export const recentesAlbums = (() => {
   const allContent = [...realAlbums, ...popularMixes];
   const shuffled = allContent.sort(() => 0.5 - Math.random()).slice(0, 8);
   
-  return shuffled.map(album => ({
-    id: album.id,
-    title: album.title,
-    artist: album.artist === 'Lira Music' ? album.title : album.artist,
-    coverUrl: album.coverUrl, // Garantir que coverUrl está sendo preservado
-    songs: album.songs || [],
-    year: album.year,
-  }));
+  return shuffled.map(album => {
+    console.log('Creating recent album:', album.title, 'coverUrl:', album.coverUrl);
+    return {
+      id: album.id,
+      title: album.title,
+      artist: album.artist === 'Lira Music' ? album.title : album.artist,
+      coverUrl: album.coverUrl,
+      songs: album.songs || [],
+      year: album.year,
+    };
+  });
 })();
 
 export const paraVoceAlbums = createParaVoceAlbums();
