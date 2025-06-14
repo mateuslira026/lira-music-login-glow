@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
+
+import React, { createContext, useContext, useState, ReactNode, useCallback, useEffect } from 'react';
+import { useAudioPlayer } from '@/hooks/useAudioPlayer';
 
 export interface Song {
   id: string;
@@ -7,7 +9,7 @@ export interface Song {
   albumArtUrl: string;
   albumTitle?: string; 
   trackNumber?: number;
-  audioUrl?: string; // URL para reproduzir a música
+  audioUrl?: string;
 }
 
 interface PlayerContextType {
@@ -23,22 +25,45 @@ interface PlayerContextType {
   likedSongs: Song[];
   toggleLike: (song: Song) => void;
   isLiked: (songId: string) => boolean;
+  // Audio player state
+  currentTime: number;
+  duration: number;
+  volume: number;
+  isLoading: boolean;
+  audioError: string | null;
+  seek: (time: number) => void;
+  setVolume: (volume: number) => void;
 }
 
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
+
+// Simple function to get YouTube audio stream URL
+const getYouTubeAudioUrl = (youtubeUrl: string): string => {
+  // Extract video ID from YouTube URL
+  const videoId = youtubeUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/)?.[1];
+  if (!videoId) return '';
+  
+  // Use a public YouTube audio proxy service
+  return `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&rel=0&showinfo=0`;
+};
 
 export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [currentSong, setCurrentSongInternal] = useState<Song | null>(null);
   const [playlist, setPlaylist] = useState<Song[]>([]);
   const [currentTrackIndex, setCurrentTrackIndex] = useState<number | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [likedSongs, setLikedSongs] = useState<Song[]>([]);
+  
+  const audioPlayer = useAudioPlayer();
 
-  const togglePlay = () => {
+  const togglePlay = useCallback(async () => {
     if (currentSong) {
-      setIsPlaying(!isPlaying);
+      if (audioPlayer.isPlaying) {
+        audioPlayer.pause();
+      } else {
+        await audioPlayer.play();
+      }
     }
-  };
+  }, [currentSong, audioPlayer]);
 
   const toggleLike = useCallback((song: Song) => {
     setLikedSongs(prev => {
@@ -55,11 +80,25 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     return likedSongs.some(song => song.id === songId);
   }, [likedSongs]);
 
+  const loadSongAudio = useCallback(async (song: Song) => {
+    if (!song.audioUrl) {
+      console.warn('No audio URL provided for song:', song.title);
+      return;
+    }
+
+    console.log('Loading audio for song:', song.title, 'URL:', song.audioUrl);
+    
+    // For demo purposes, we'll use a placeholder audio file
+    // In a real app, you'd need proper audio URLs or a streaming service
+    const audioUrl = 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav';
+    audioPlayer.loadAudio(audioUrl);
+  }, [audioPlayer]);
+
   const setCurrentSong = useCallback((song: Song | null) => {
     console.log('PlayerContext: setCurrentSong called with:', song);
     setCurrentSongInternal(song);
     if (song) {
-      setIsPlaying(true); // Auto-play when a new song is set directly
+      loadSongAudio(song);
       // If a single song is set, clear playlist context or find it in current playlist
       const indexInPlaylist = playlist.findIndex(s => s.id === song.id);
       if (indexInPlaylist !== -1) {
@@ -70,11 +109,11 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
         setCurrentTrackIndex(song ? 0 : null);
       }
     } else {
-      setIsPlaying(false);
+      audioPlayer.pause();
       setPlaylist([]);
       setCurrentTrackIndex(null);
     }
-  }, [playlist]);
+  }, [playlist, loadSongAudio, audioPlayer]);
 
   const playPlaylist = useCallback((songs: Song[], startIndex: number = 0) => {
     console.log('PlayerContext: playPlaylist called with:', songs.length, 'songs, startIndex:', startIndex);
@@ -82,14 +121,13 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     if (songs.length > 0 && startIndex < songs.length) {
       setCurrentTrackIndex(startIndex);
       setCurrentSongInternal(songs[startIndex]);
-      setIsPlaying(true);
+      loadSongAudio(songs[startIndex]);
       console.log('PlayerContext: Set current song to:', songs[startIndex]);
     } else {
       setCurrentSongInternal(null);
-      setIsPlaying(false);
       setCurrentTrackIndex(null);
     }
-  }, []);
+  }, [loadSongAudio]);
 
   const playNext = useCallback(() => {
     console.log('playNext called - playlist length:', playlist.length, 'currentTrackIndex:', currentTrackIndex);
@@ -98,9 +136,9 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
       console.log('Moving to next index:', nextIndex, 'song:', playlist[nextIndex]?.title);
       setCurrentTrackIndex(nextIndex);
       setCurrentSongInternal(playlist[nextIndex]);
-      setIsPlaying(true);
+      loadSongAudio(playlist[nextIndex]);
     }
-  }, [playlist, currentTrackIndex]);
+  }, [playlist, currentTrackIndex, loadSongAudio]);
 
   const playPrevious = useCallback(() => {
     console.log('playPrevious called - playlist length:', playlist.length, 'currentTrackIndex:', currentTrackIndex);
@@ -109,9 +147,18 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
       console.log('Moving to previous index:', prevIndex, 'song:', playlist[prevIndex]?.title);
       setCurrentTrackIndex(prevIndex);
       setCurrentSongInternal(playlist[prevIndex]);
-      setIsPlaying(true);
+      loadSongAudio(playlist[prevIndex]);
     }
-  }, [playlist, currentTrackIndex]);
+  }, [playlist, currentTrackIndex, loadSongAudio]);
+
+  // Auto-play next song when current one ends
+  useEffect(() => {
+    if (!audioPlayer.isPlaying && audioPlayer.currentTime > 0 && audioPlayer.duration > 0 && audioPlayer.currentTime >= audioPlayer.duration) {
+      if (playlist.length > 1) {
+        playNext();
+      }
+    }
+  }, [audioPlayer.isPlaying, audioPlayer.currentTime, audioPlayer.duration, playlist.length, playNext]);
 
   return (
     <PlayerContext.Provider value={{ 
@@ -122,11 +169,18 @@ export const PlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
       playPlaylist,
       playNext,
       playPrevious,
-      isPlaying, 
+      isPlaying: audioPlayer.isPlaying, 
       togglePlay,
       likedSongs,
       toggleLike,
-      isLiked
+      isLiked,
+      currentTime: audioPlayer.currentTime,
+      duration: audioPlayer.duration,
+      volume: audioPlayer.volume,
+      isLoading: audioPlayer.isLoading,
+      audioError: audioPlayer.error,
+      seek: audioPlayer.seek,
+      setVolume: audioPlayer.setVolume,
     }}>
       {children}
     </PlayerContext.Provider>

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePlayer } from '@/contexts/PlayerContext';
@@ -8,16 +7,44 @@ import { Slider } from "@/components/ui/slider";
 import { FastAverageColor, FastAverageColorResult } from 'fast-average-color';
 
 const PlayerPage = () => {
-  const { currentSong, isPlaying, togglePlay, playNext, playPrevious } = usePlayer();
+  const { 
+    currentSong, 
+    isPlaying, 
+    togglePlay, 
+    playNext, 
+    playPrevious,
+    currentTime,
+    duration,
+    isLoading,
+    audioError,
+    seek
+  } = usePlayer();
   const navigate = useNavigate();
-  const [bgColor, setBgColor] = useState<string>('rgb(88, 28, 135)'); // Fallback roxo escuro
+  const [bgColor, setBgColor] = useState<string>('rgb(88, 28, 135)');
+
+  // Format time helper
+  const formatTime = (seconds: number) => {
+    if (isNaN(seconds)) return '0:00';
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  const handleSeek = (value: number[]) => {
+    if (duration > 0) {
+      const newTime = (value[0] / 100) * duration;
+      seek(newTime);
+    }
+  };
+
+  const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   useEffect(() => {
     if (currentSong?.albumArtUrl) {
       const fac = new FastAverageColor();
       let imageUrl = currentSong.albumArtUrl;
       if (imageUrl.includes('picsum.photos')) {
-        imageUrl = `${imageUrl}?ts=${new Date().getTime()}`; // Ensure timestamp key is unique
+        imageUrl = `${imageUrl}?ts=${new Date().getTime()}`;
       }
 
       const updateBackgroundColor = (colorResult: FastAverageColorResult | null) => {
@@ -36,23 +63,17 @@ const PlayerPage = () => {
 
       const attemptDirectColorExtraction = async () => {
         try {
-          // console.log('Attempting direct color extraction for:', imageUrl);
           const color = await fac.getColorAsync(imageUrl, { crossOrigin: 'anonymous' });
           updateBackgroundColor(color);
         } catch (directError) {
           console.warn(`Direct getColorAsync failed for ${imageUrl}: ${directError}. Attempting fetch workaround for CORS.`);
-          // console.log('Direct error details:', directError);
           await attemptFetchWorkaround(imageUrl, fac, updateBackgroundColor);
         }
       };
 
       const attemptFetchWorkaround = async (url: string, facInstance: FastAverageColor, callback: (colorResult: FastAverageColorResult | null) => void) => {
         try {
-          // console.log('Attempting fetch workaround for:', url);
-          // Using a proxy for picsum.photos as it often has CORS issues
           const proxyUrl = url.includes('picsum.photos') ? `https://images.weserv.nl/?url=${encodeURIComponent(url.split('?')[0])}&t=${new Date().getTime()}` : url;
-          // console.log('Using proxy URL:', proxyUrl);
-
           const response = await fetch(proxyUrl, { mode: 'cors' });
           if (!response.ok) {
             throw new Error(`Fetch failed for album art: ${response.status} ${response.statusText} from ${proxyUrl}`);
@@ -67,7 +88,6 @@ const PlayerPage = () => {
           }
         } catch (fetchError) {
           console.error(`Fetch workaround failed for ${url}: ${fetchError}`);
-          // console.log('Fetch error details:', fetchError);
           callback(null); 
         }
       };
@@ -126,19 +146,22 @@ const PlayerPage = () => {
         <div className="mb-4 sm:mb-6 px-2">
           <h2 className="text-2xl font-bold truncate">{currentSong.title}</h2>
           <p className="text-lg text-gray-300 truncate">{currentSong.artist}</p>
+          {isLoading && <p className="text-sm text-gray-400">Carregando...</p>}
+          {audioError && <p className="text-sm text-red-400">{audioError}</p>}
         </div>
 
         {/* Progress Bar */}
         <div className="mb-4 sm:mb-6 px-2">
           <Slider
-            defaultValue={[0]} 
+            value={[progressPercentage]} 
             max={100}
-            step={1}
+            step={0.1}
+            onValueChange={handleSeek}
             className="w-full [&>span:first-child]:h-1 [&>span:first-child>span]:bg-white [&>span:nth-child(2)]:bg-white/30 [&>span:nth-child(2)]:h-1"
           />
           <div className="flex justify-between text-xs text-gray-400 mt-1">
-            <span>0:00</span> 
-            <span>3:30</span> 
+            <span>{formatTime(currentTime)}</span> 
+            <span>{formatTime(duration)}</span> 
           </div>
         </div>
 
@@ -151,7 +174,8 @@ const PlayerPage = () => {
             variant="default" 
             size="icon" 
             onClick={togglePlay} 
-            className="bg-white text-black hover:bg-gray-200 h-16 w-16 rounded-full shadow-lg"
+            disabled={isLoading}
+            className="bg-white text-black hover:bg-gray-200 h-16 w-16 rounded-full shadow-lg disabled:opacity-50"
           >
             {isPlaying ? <Pause className="h-8 w-8" /> : <Play className="h-8 w-8" />}
           </Button>
@@ -165,4 +189,3 @@ const PlayerPage = () => {
 };
 
 export default PlayerPage;
-

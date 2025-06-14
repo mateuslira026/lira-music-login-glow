@@ -7,12 +7,25 @@ import { Progress } from '@/components/ui/progress';
 import { FastAverageColor, FastAverageColorResult } from 'fast-average-color';
 
 const MiniPlayer = () => {
-  const { currentSong, isPlaying, togglePlay, playNext, playPrevious, playlist, currentTrackIndex, toggleLike, isLiked } = usePlayer();
+  const { 
+    currentSong, 
+    isPlaying, 
+    togglePlay, 
+    playNext, 
+    playPrevious, 
+    playlist, 
+    currentTrackIndex, 
+    toggleLike, 
+    isLiked,
+    currentTime,
+    duration 
+  } = usePlayer();
   const navigate = useNavigate();
   const [bgColor, setBgColor] = useState<string>('rgb(88, 28, 135)');
-  const [progress, setProgress] = useState(0);
 
   console.log('MiniPlayer render - currentSong:', currentSong, 'isPlaying:', isPlaying);
+
+  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   // Simular progresso da música
   useEffect(() => {
@@ -194,11 +207,11 @@ const MiniPlayer = () => {
         </div>
       </div>
 
-      {/* Progress Bar - Na divisa entre mini-player e bottom nav */}
+      {/* Progress Bar - Real audio progress */}
       <div className="w-full mx-2">
         <Progress 
           value={progress} 
-          className={`h-1 bg-white/20 rounded-none ${isPlaying ? 'transition-all duration-300' : ''}`} 
+          className="h-1 bg-white/20 rounded-none" 
         />
       </div>
     </div>
