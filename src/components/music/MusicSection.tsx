@@ -26,17 +26,19 @@ const MusicSection: React.FC<MusicSectionProps> = ({ title, albums, artists }) =
   console.log('MusicSection - Artists:', artists?.length || 0);
 
   return (
-    <section className="mb-6 px-4">
-      <div className="flex items-center justify-between mb-3">
-        <h2 className="text-xl font-bold text-white">{title}</h2>
+    <section className="mb-8 px-4">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-2xl font-bold text-white block">{title}</h2>
         <button 
           onClick={handleSeeMore}
-          className="text-sm text-lira-blue hover:underline font-medium"
+          className="text-sm text-lira-blue hover:underline font-medium flex-shrink-0"
         >
           Ver mais
         </button>
       </div>
-      {artists ? <ArtistCarousel artists={artists} /> : <AlbumCarousel albums={albums || []} />}
+      <div className="w-full">
+        {artists ? <ArtistCarousel artists={artists} /> : <AlbumCarousel albums={albums || []} />}
+      </div>
     </section>
   );
 };
